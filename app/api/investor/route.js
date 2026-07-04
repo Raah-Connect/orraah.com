@@ -1,11 +1,15 @@
 // app/api/investor/route.js
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FOUNDER_EMAIL = process.env.FOUNDER_EMAIL || 'you@orraah.com';
 
 export async function POST(request) {
+  if (!process.env.RESEND_API_KEY) {
+    return Response.json({ error: 'Email service not configured' }, { status: 500 });
+  }
+
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
   try {
     const { email, name } = await request.json();
 
