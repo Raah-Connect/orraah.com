@@ -207,10 +207,10 @@ export default function Home() {
 
         h1 {
           font-family: 'Syne', sans-serif;
-          font-size: clamp(2.8rem, 6vw, 5rem);
-          font-weight: 600;
-          line-height: 1.05;
-          letter-spacing: -0.03em;
+          font-size: clamp(1.6rem, 3vw, 2.5rem);
+          font-weight: 700;
+          line-height: 1.15;
+          letter-spacing: -0.02em;
           margin-bottom: 28px;
           color: var(--text);
         }
