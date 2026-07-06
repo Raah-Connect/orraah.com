@@ -761,12 +761,11 @@ export default function Home() {
         {/* HERO */}
         <section>
           <h1>
-            Your data.<br />
-            Your rules.
+            Take back control of your digital life.
           </h1>
 
           <p className="hero-sub">
-            Turn your computer into a personal server, maintains itself, no technical expertise needed.  Host your friends, full app ecosystem with + 10 years of development.   Your data owned by you.   Be as public or private as you want.
+           Orraah turns your computer into a personal server for apps, identity, and peer-to-peer hosting — simple to use, private by default, and built for ownership.
             <br /><br />
             Applications:  Commerce, AI sandbox, Private/Public Community hosting
           </p>
