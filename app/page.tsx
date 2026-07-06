@@ -4,39 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
   const [investorEmail, setInvestorEmail] = useState("");
   const [investorName, setInvestorName] = useState("");
   const [investorSubmitted, setInvestorSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-
-  const handleWaitlist = async () => {
-    if (!email) return;
-
-    setLoading(true);
-
-    try {
-      const response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setSubmitted(true);
-        setEmail('');
-      } else {
-        alert(data.error || 'Something went wrong');
-      }
-    } catch (error) {
-      alert('Failed to join waitlist. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleInvestor = async () => {
     if (!investorEmail || !investorName) return;
@@ -237,7 +208,7 @@ export default function Home() {
         h1 {
           font-family: 'Syne', sans-serif;
           font-size: clamp(2.8rem, 6vw, 5rem);
-          font-weight: 800;
+          font-weight: 600;
           line-height: 1.05;
           letter-spacing: -0.03em;
           margin-bottom: 28px;
@@ -633,7 +604,7 @@ export default function Home() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          padding: 8px 16px;
+          padding: 10px 12px;
           border-radius: 8px;
           font-family: 'DM Mono', monospace;
           font-size: 0.75rem;
@@ -775,98 +746,33 @@ export default function Home() {
       <main>
         {/* NAV */}
         <nav>
-          <div className="logo">orraah</div>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <img src="/orraah-logo.png" alt="Orraah" style={{ height: "60px", width: "auto" }} />
+            <span className="logo" style={{ color: "#0a0f1e", alignSelf: "center", lineHeight: "1" }}>Orraah</span>
+          </div>
           <div className="nav-right">
-            <div className="nav-badge">EARLY ACCESS</div>
-            <a href="#get-started" className="btn-get-started">
-              Get Started Free →
-            </a>
+            <a href="#store" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Store</a>
+            <a href="#faq" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>FAQ</a>
+            <a href="#contact" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Contact</a>
+            <a href="#download" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Download</a>
           </div>
         </nav>
 
         {/* HERO */}
         <section>
           <h1>
-            Own your data.<br />
-            <em>Run your own internet.</em>
+            Your data.<br />
+            Your rules.
           </h1>
 
           <p className="hero-sub">
-            Orraah turns your computer into a personal server — no cloud, no lockouts, no subscriptions.
+            Turn your computer into a personal server, maintains itself, no technical expertise needed.  Host your friends, full app ecosystem with + 10 years of development.   Your data owned by you.   Be as public or private as you want.
+            <br /><br />
+            Applications:  Commerce, AI sandbox, Private/Public Community hosting
           </p>
 
-          <div style={{ marginTop: "32px" }}>
-            <a href="YOUR_STRIPE_LINK" className="btn-gold">
-              Lock Founder Price – $49 →
-            </a>
-          </div>
 
-          <p style={{ marginTop: "12px", fontSize: "0.85rem", color: "var(--text-dim)" }}>
-            500 founder spots · $149 at launch · lifetime access
-          </p>
-
-          {/* WAITLIST */}
-          <div className="waitlist-box" id="get-started">
-            <div className="waitlist-label">GET STARTED FREE</div>
-            <div className="waitlist-title">Be first when we launch</div>
-            <p className="waitlist-desc">
-              Get notified the moment Orraah is ready — plus lock in your early adopter pricing before it&apos;s gone.
-            </p>
-            {!submitted ? (
-              <div className="input-row">
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  onKeyDown={(e) => e.key === "Enter" && handleWaitlist()}
-                />
-                <button className="btn-gold" onClick={handleWaitlist} disabled={loading}>
-                  {loading ? "Joining..." : "Get Started Free →"}
-                </button>
-              </div>
-            ) : (
-              <div className="success-msg">
-                ✓ You&apos;re on the list! We&apos;ll be in touch soon.
-              </div>
-            )}
-          </div>
         </section>
-
-        {/* EARLY ADOPTER */}
-        <div className="early-box">
-          <div>
-            <div className="early-tag">⚡ Limited Time · Early Adopter Offer</div>
-            <div className="early-title">Lock in lifetime pricing before we launch</div>
-            <p className="early-desc">
-              The first 500 customers get a permanent discount — forever. Pay once, own Orraah for life with all future updates included. This offer disappears at launch.
-            </p>
-            <div className="perks">
-              <div className="perk">
-                <span className="perk-icon">✦</span>
-                <span>Lifetime access — no subscriptions</span>
-              </div>
-              <div className="perk">
-                <span className="perk-icon">✦</span>
-                <span>All future updates included</span>
-              </div>
-              <div className="perk">
-                <span className="perk-icon">✦</span>
-                <span>Priority support &amp; onboarding</span>
-              </div>
-              <div className="perk">
-                <span className="perk-icon">✦</span>
-                <span>Shape the product roadmap</span>
-              </div>
-            </div>
-          </div>
-          <div className="price-card">
-            <div className="price-original">$149 at launch</div>
-            <div className="price-now">$49</div>
-            <div className="price-label">one-time payment</div>
-            <div className="price-badge">66% OFF</div>
-          </div>
-        </div>
 
         {/* CLOUD VS SOVEREIGN */}
         <section className="compare-section">
@@ -1031,20 +937,20 @@ export default function Home() {
 
         {/* FOOTER */}
         <footer>
-          <div className="footer-logo">orraah</div>
+          <div className="footer-logo"><span className="logo" style={{ color: "#0a0f1e" }}>Orraah</span></div>
 
           <div className="social-links">
-            <a href="https://x.com/orraah" target="_blank" rel="noopener noreferrer" className="social-btn x">
-              X
+            <a href="https://x.com/orraah" target="_blank" rel="noopener noreferrer" className="social-btn x" title="X (Twitter)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             </a>
-            <a href="https://discord.com/invite/GDarZR92K" target="_blank" rel="noopener noreferrer" className="social-btn discord">
-              Discord
+            <a href="https://discord.com/invite/GDarZR92K" target="_blank" rel="noopener noreferrer" className="social-btn discord" title="Discord">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
             </a>
-            <a href="https://github.com/Raah-Connect/" target="_blank" rel="noopener noreferrer" className="social-btn github">
-              GitHub
+            <a href="https://github.com/Raah-Connect/" target="_blank" rel="noopener noreferrer" className="social-btn github" title="GitHub">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
             </a>
-            <a href="https://t.me/orraah" target="_blank" rel="noopener noreferrer" className="social-btn telegram">
-              Telegram
+            <a href="https://t.me/orraah" target="_blank" rel="noopener noreferrer" className="social-btn telegram" title="Telegram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
             </a>
           </div>
 
@@ -1055,7 +961,7 @@ export default function Home() {
           </div>
 
           <div className="footer-note">
-            © 2025 Orraah · Prosperity Public License 3.0
+            © 2026 Raah Connect LLC — All rights reserved.
           </div>
         </footer>
       </main>

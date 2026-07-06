@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Orraah — Own your data. Run your own internet.",
+  title: "Orraah — Your data. Your rules",
   description: "Orraah turns your computer into a personal server — no cloud, no lockouts, no subscriptions.",
 };
 
