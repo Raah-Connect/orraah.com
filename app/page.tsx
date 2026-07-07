@@ -1,41 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 
 export default function Home() {
-  const [investorEmail, setInvestorEmail] = useState("");
-  const [investorName, setInvestorName] = useState("");
-  const [investorSubmitted, setInvestorSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const handleInvestor = async () => {
-    if (!investorEmail || !investorName) return;
-
-    setLoading(true);
-
-    try {
-      const response = await fetch('/api/investor', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: investorEmail, name: investorName })
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setInvestorSubmitted(true);
-        setInvestorEmail('');
-        setInvestorName('');
-      } else {
-        alert(data.error || 'Something went wrong');
-      }
-    } catch (error) {
-      alert('Failed to submit. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <>
@@ -490,109 +458,6 @@ export default function Home() {
           line-height: 1.65;
         }
 
-        /* INVESTOR */
-        .investor-section {
-          border-top: 1px solid var(--border);
-          padding: 80px 0;
-        }
-
-        .investor-grid {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 60px;
-          align-items: start;
-        }
-
-        @media (max-width: 720px) {
-          .investor-grid { grid-template-columns: 1fr; gap: 40px; }
-        }
-
-        .investor-stats {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
-          margin: 32px 0;
-        }
-
-        .stat-box {
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: 12px;
-          padding: 20px;
-        }
-
-        .stat-num {
-          font-family: 'Syne', sans-serif;
-          font-size: 1.8rem;
-          font-weight: 800;
-          color: var(--gold);
-          line-height: 1;
-          margin-bottom: 4px;
-        }
-
-        .stat-label {
-          font-size: 0.8rem;
-          color: var(--text-dim);
-          line-height: 1.4;
-        }
-
-        .investor-form {
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: 16px;
-          padding: 36px;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .investor-form::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        }
-
-        .form-title {
-          font-family: 'Syne', sans-serif;
-          font-size: 1.2rem;
-          font-weight: 700;
-          margin-bottom: 6px;
-        }
-
-        .form-sub {
-          font-size: 0.85rem;
-          color: var(--text-dim);
-          margin-bottom: 24px;
-          line-height: 1.6;
-        }
-
-        .input-stack {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-        }
-
-        .btn-outline {
-          background: transparent;
-          color: var(--accent);
-          border: 1px solid var(--accent);
-          padding: 14px 28px;
-          border-radius: 10px;
-          font-family: 'Syne', sans-serif;
-          font-weight: 700;
-          font-size: 0.95rem;
-          cursor: pointer;
-          transition: all 0.2s;
-          width: 100%;
-          letter-spacing: 0.01em;
-        }
-
-        .btn-outline:hover {
-          background: rgba(59,130,246,0.1);
-          transform: translateY(-1px);
-        }
-
         /* FOOTER */
         .social-links {
           display: flex;
@@ -754,7 +619,7 @@ export default function Home() {
             <a href="#store" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Store</a>
             <a href="#faq" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>FAQ</a>
             <a href="#contact" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Contact</a>
-            <a href="#download" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Download</a>
+            <a href="/download" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Download</a>
           </div>
         </nav>
 
@@ -866,70 +731,6 @@ export default function Home() {
               <div className="node-title">⚡ Early Network Pioneer</div>
               The first users help shape the next generation
               internet.
-            </div>
-          </div>
-        </section>
-
-        {/* INVESTOR SECTION */}
-        <section className="investor-section">
-          <div className="investor-grid">
-            <div>
-              <div className="hero-tag" style={{ marginBottom: "24px" }}>For Investors</div>
-              <div className="section-title">A real market,<br />underserved.</div>
-              <p className="section-sub" style={{ marginBottom: "24px" }}>
-                Billions of people are locked out of owning their digital life — not because they don&apos;t want to, but because the tools are too technical or too expensive. Orraah makes personal servers accessible to anyone with a computer, in any country.
-              </p>
-              <div className="investor-stats">
-                <div className="stat-box">
-                  <div className="stat-num">5B+</div>
-                  <div className="stat-label">people in developing markets</div>
-                </div>
-                <div className="stat-box">
-                  <div className="stat-num">~0</div>
-                  <div className="stat-label">accessible personal server apps today</div>
-                </div>
-                <div className="stat-box">
-                  <div className="stat-num">P3L</div>
-                  <div className="stat-label">Prosperity license model</div>
-                </div>
-                <div className="stat-box">
-                  <div className="stat-num">Rust</div>
-                  <div className="stat-label">Tauri · low-resource desktop</div>
-                </div>
-              </div>
-              <p style={{ fontSize: "0.85rem", color: "var(--text-dim)", lineHeight: "1.7" }}>
-                Built on a sovereign identity layer. Sustainable business model with free noncommercial use and a commercial license tier. Open source website, proprietary core app.
-              </p>
-            </div>
-
-            <div className="investor-form">
-              <div className="form-title">Interested in investing?</div>
-              <p className="form-sub">
-                We&apos;re speaking with early-stage investors and grants. Fill in your details and we&apos;ll reach out with our pitch deck.
-              </p>
-              {!investorSubmitted ? (
-                <div className="input-stack">
-                  <input
-                    type="text"
-                    placeholder="Your name or organization"
-                    value={investorName}
-                    onChange={(e) => setInvestorName(e.target.value)}
-                  />
-                  <input
-                    type="email"
-                    placeholder="your@email.com"
-                    value={investorEmail}
-                    onChange={(e) => setInvestorEmail(e.target.value)}
-                  />
-                  <button className="btn-outline" onClick={handleInvestor} disabled={loading}>
-                    {loading ? "Sending..." : "Request Pitch Deck →"}
-                  </button>
-                </div>
-              ) : (
-                <div className="success-msg">
-                  ✓ Thank you! We&apos;ll send our pitch deck shortly.
-                </div>
-              )}
             </div>
           </div>
         </section>
