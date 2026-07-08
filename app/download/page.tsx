@@ -157,9 +157,9 @@ export default function DownloadPage() {
           Orraah
         </Link>
         <div className="dl-nav-right">
-          <a href="/#store">Store</a>
-          <a href="/#faq">FAQ</a>
-          <a href="/#contact">Contact</a>
+          <a href="/store">Store</a>
+          <a href="/faq">FAQ</a>
+          <a href="/contact">Contact</a>
           <a href="/download">Download</a>
         </div>
       </nav>

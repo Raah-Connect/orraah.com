@@ -1,13 +1,13 @@
 import LegalPage from '../components/LegalPage';
 
-export default function SupportPage() {
+export default function ContactPage() {
   return (
-    <LegalPage title="Customer Support">
-      <p className="legal-date">Response time: 24–48 hours</p>
+    <LegalPage title="Contact Us">
+      <p className="legal-date">Response time: 24-48 hours</p>
 
-      <p>We&apos;re here to help! Reach out any time and we&apos;ll get back to you as soon as possible.</p>
+      <p>We&apos;re here to help. Reach out any time and we&apos;ll get back to you as soon as possible.</p>
 
-      <h2>Contact Us</h2>
+      <h2>Get in Touch</h2>
       <p>Email: support@raahconnect.com</p>
       <p>Include your order ID if applicable.</p>
 
@@ -18,7 +18,7 @@ export default function SupportPage() {
       <ul>
         <li><a href="https://discord.gg/GDarZR92K">Discord</a></li>
         <li><a href="https://github.com/Raah-Connect">GitHub</a></li>
-        <li><a href="https://t.me/orraah">Telegram</a></li>
+        <li><a href="https://t.me/raah-connect">Telegram</a></li>
       </ul>
     </LegalPage>
   );

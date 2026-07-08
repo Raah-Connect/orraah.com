@@ -110,9 +110,9 @@ export default function LegalPage({ title, children }: { title: string; children
           Orraah
         </a>
         <div className="legal-nav-right">
-          <a href="/#store">Store</a>
-          <a href="/#faq">FAQ</a>
-          <a href="/#contact">Contact</a>
+          <a href="/store">Store</a>
+          <a href="/faq">FAQ</a>
+          <a href="/contact">Contact</a>
           <a href="/download">Download</a>
         </div>
       </nav>
