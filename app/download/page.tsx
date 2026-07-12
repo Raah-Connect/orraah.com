@@ -200,7 +200,7 @@ export default function DownloadPage() {
             <div className="dl-card-title">Linux</div>
             <div className="dl-card-meta">amd64 · AppImage · v0.1.0</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.0_amd64.AppImage"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.0_amd64.deb"
               className="dl-btn"
             >
               ↓ Download for Linux
