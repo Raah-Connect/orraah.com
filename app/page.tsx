@@ -196,7 +196,7 @@ export default function Home() {
           font-size: 1.15rem;
           color: var(--text-dim);
           line-height: 1.7;
-          max-width: 600px;
+          max-width: 900px;
           margin-bottom: 52px;
           font-weight: 300;
         }
@@ -666,10 +666,16 @@ export default function Home() {
           </section>
 
         {/* SCREENSHOTS */}
-        <section className="screenshot-grid">
-          <img src="/screenshot-landscape.png" alt="Orraah landscape view" />
-          <img src="/screenshot-server-manager.png" alt="Orraah server manager" />
-        </section>
+          <section className="screenshot-grid">
+            <div className="screenshot-item">
+              <img src="/screenshot-server-manager.png" alt="Orraah server manager" />
+              <p className="screenshot-caption">Manage your server: start, stop, and monitor in one place.</p>
+          </div>
+                      <div className="screenshot-item">
+              <img src="/screenshot-landscape.png" alt="Orraah landscape view" />
+              <p className="screenshot-caption">Your personal server — everything at a glance.</p>
+            </div>
+          </section>
 
         {/* CLOUD VS SOVEREIGN */}
         <section className="compare-section">
