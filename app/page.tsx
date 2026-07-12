@@ -25,11 +25,12 @@ export default function Home() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-          background: var(--bg);
-          color: var(--text);
-          font-family: 'DM Sans', sans-serif;
-          overflow-x: hidden;
-        }
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+            overflow-y: visible;
+          }
 
         .grid-bg {
           position: fixed;
@@ -177,7 +178,7 @@ export default function Home() {
           font-family: 'Syne', sans-serif;
           font-size: clamp(1.6rem, 3vw, 2.5rem);
           font-weight: 700;
-          line-height: 1.15;
+          line-height: 1.35;
           letter-spacing: -0.02em;
           margin-bottom: 28px;
           color: var(--text);
@@ -186,7 +187,10 @@ export default function Home() {
         h1 em {
           font-style: normal;
           color: var(--gold);
+          display: block;
+          margin-top: 8px;
         }
+
 
         .hero-sub {
           font-size: 1.15rem;
@@ -601,7 +605,30 @@ export default function Home() {
           color: var(--text);
         }
 
-        .section-pad { padding: 80px 0 40px; }
+       .section-pad { padding: 80px 0 40px; }
+
+        .screenshot-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+          padding: 20px 0 60px;
+        }
+
+        .screenshot-grid img {
+          width: 100%;
+          height: 340px;
+          object-fit: contain;
+          background: var(--surface);
+          border-radius: 12px;
+          border: 1px solid var(--border);
+          box-shadow: 0 4px 20px rgba(26,111,232,0.08);
+          padding: 12px;
+        }
+
+        @media (max-width: 720px) {
+          .screenshot-grid { grid-template-columns: 1fr; }
+        }
+
       `}</style>
 
       <div className="grid-bg" />
@@ -620,22 +647,28 @@ export default function Home() {
             <a href="/faq" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>FAQ</a>
             <a href="/contact" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Contact</a>
             <a href="/download" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Download</a>
+            <a href="/download" className="btn-get-started">Try it free</a>
           </div>
         </nav>
 
-        {/* HERO */}
+{/* HERO */}
         <section>
           <h1>
-            Take back control of your digital life.
+            <span style={{ display: "block", paddingBottom: "4px" }}>
+              Your computer just got a promotion.
+            </span>
+            <em>Your data. Your rules.</em>
           </h1>
 
           <p className="hero-sub">
-           Orraah turns your computer into a personal server for apps, identity, and peer-to-peer hosting — simple to use, private by default, and built for ownership.
-            <br /><br />
-            Applications:  Commerce, AI sandbox, Private/Public Community hosting
+            Orraah adds a personal server to your computer — nothing else changes.
           </p>
+          </section>
 
-
+        {/* SCREENSHOTS */}
+        <section className="screenshot-grid">
+          <img src="/screenshot-landscape.png" alt="Orraah landscape view" />
+          <img src="/screenshot-server-manager.png" alt="Orraah server manager" />
         </section>
 
         {/* CLOUD VS SOVEREIGN */}
