@@ -418,7 +418,7 @@ export default function Home() {
           font-size: 0.95rem;
           line-height: 1.7;
           margin-bottom: 48px;
-          max-width: 520px;
+          max-width: 950px;
         }
 
         .steps {
@@ -669,7 +669,7 @@ export default function Home() {
           <section className="screenshot-grid">
             <div className="screenshot-item">
               <img src="/screenshot-server-manager.png" alt="Orraah server manager" />
-              <p className="screenshot-caption">Manage your server: start, stop, and monitor in one place.</p>
+              <p className="screenshot-caption">Manage your servers: start, stop, and monitor in one place.</p>
           </div>
                       <div className="screenshot-item">
               <img src="/screenshot-landscape.png" alt="Orraah landscape view" />
@@ -679,19 +679,18 @@ export default function Home() {
 
         {/* CLOUD VS SOVEREIGN */}
         <section className="compare-section">
-          <div className="section-title">Take back control of your internet</div>
-          <p className="section-sub">
-            The modern internet runs on corporate servers. Orraah flips that model —
-            giving individuals the power to run their own infrastructure.
-          </p>
+          <div className="section-title">Move from being a renter to an owner.</div>
+            <p className="section-sub">
+              The modern internet runs on corporate servers. Orraah flips that model — giving individuals the power to run their own infrastructure with the compute they already have.
+            </p>
 
           <div className="compare-grid">
             <div className="compare-box">
               <div className="compare-title">☁️ The Cloud Internet</div>
               <div className="compare-list">
                 <div>Your account lives on someone else&apos;s server</div>
-                <div>Platforms can ban or lock accounts</div>
-                <div>Your data is mined for ads</div>
+                <div>Platforms dictate terms of service and access requirements</div>
+                <div>Your data is mined for the profit of others</div>
                 <div>Your identity depends on corporations</div>
               </div>
             </div>
@@ -700,7 +699,7 @@ export default function Home() {
               <div className="compare-title">🖥 With Orraah</div>
               <div className="compare-list">
                 <div>Your server runs on your own computer</div>
-                <div>No platform bans or lockouts</div>
+                <div>You decide your security requirements</div>
                 <div>Your data stays under your control</div>
                 <div>Your identity belongs to you</div>
               </div>
