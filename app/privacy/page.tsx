@@ -13,23 +13,22 @@ export default function PrivacyPolicy() {
       <ul>
         <li>Email address (when you join the waitlist or make a purchase)</li>
         <li>Name (optional, if provided)</li>
-        <li>Payment information (processed securely by Stripe — we do not store card details)</li>
+        <li>Payment information (processed securely by payment processor — we do not store card details)</li>
         <li>Basic usage data (e.g., page visits, interactions)</li>
       </ul>
 
       <h2>2. How We Use Your Information</h2>
       <ul>
-        <li>Provide access to Orraah</li>
         <li>Send product updates and important notifications</li>
         <li>Process payments and confirm purchases</li>
         <li>Improve the product and user experience</li>
       </ul>
 
       <h2>3. Payments</h2>
-      <p>All payments are handled by Stripe. We do not store or have access to your full payment details.</p>
+      <p>All payments are handled by the payment processor. We do not store or have access to your full payment details.</p>
 
       <h2>4. Data Sharing</h2>
-      <p>We do not sell your data. We only share information with trusted services (like Stripe) necessary to operate the product.</p>
+      <p>We do not sell your data. We only share information with trusted services (like the payment processor) necessary to operate the product.</p>
 
       <h2>5. Data Retention</h2>
       <p>We retain your information only as long as necessary to provide our services or comply with legal obligations.</p>

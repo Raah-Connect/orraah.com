@@ -669,11 +669,11 @@ export default function Home() {
           <section className="screenshot-grid">
             <div className="screenshot-item">
               <img src="/screenshot-server-manager.png" alt="Orraah server manager" />
-              <p className="screenshot-caption">Manage your servers: start, stop, and monitor in one place.</p>
+              <p className="screenshot-caption">Start, stop, and manage your servers — all in one place.</p>
           </div>
                       <div className="screenshot-item">
               <img src="/screenshot-landscape.png" alt="Orraah landscape view" />
-              <p className="screenshot-caption">Your personal server — everything at a glance.</p>
+              <p className="screenshot-caption">Your dashboard — all your apps, one home screen.</p>
             </div>
           </section>
 
@@ -722,7 +722,7 @@ export default function Home() {
             <div className="step">
               <div className="step-num">02 — ACTIVATE</div>
               <div className="step-title">Turn your PC into a server</div>
-              <p className="step-desc">Orraah transforms your existing computer into a personal server in minutes. No new hardware. No cloud subscription. Just your machine, yours alone.</p>
+              <p className="step-desc">Orraah adds peer-to-peer server capabilities to your existing computer in minutes. No new hardware. No cloud subscription. Just your machine, yours alone.</p>
             </div>
             <div className="step">
               <div className="step-num">03 — CONTROL</div>
