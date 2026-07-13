@@ -698,10 +698,10 @@ export default function Home() {
             <div className="compare-box compare-good">
               <div className="compare-title">🖥 With Orraah</div>
               <div className="compare-list">
-                <div>Your server runs on your own computer</div>
+                <div>Your server runs on your own computer under your identity</div>
                 <div>You decide your security requirements</div>
                 <div>Your data stays under your control</div>
-                <div>Your identity belongs to you</div>
+                <div>Direct peer to peer interactions without an intermediatory</div>
               </div>
             </div>
           </div>
