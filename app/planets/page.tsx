@@ -180,7 +180,7 @@ export default function PlanetsPage() {
             {planets.map((patp) => (
               <div className="planet-card" key={patp}>
                 <Image
-                  src={`${API_URL}/api/sigil/${encodeURIComponent(patp)}?size=96&fg=white&bg=%231a6fe8`}
+                  src={`${API_URL}/api/sigil/${encodeURIComponent(patp)}?size=96&fg=white&bg=%231a6fe8&icon=1`}
                   alt={patp}
                   width={96}
                   height={96}
