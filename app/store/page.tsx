@@ -281,7 +281,7 @@ export default function StorePage() {
                 Planets can spawn dedicated sub-servers (called moons) for specific tasks or apps — available via terminal today, with in-app support coming soon.
               </p>
             </details>
-            <button className="product-btn">Get a planet</button>
+            <Link href="/planets" className="product-btn">Get a planet</Link>
           </div>
 
           {/* FOUNDER PACKAGE 1 */}
