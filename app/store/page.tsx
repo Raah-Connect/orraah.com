@@ -236,13 +236,17 @@ export default function StorePage() {
       `}</style>
 
       <main className="store-main">
-        <nav>
-          <span className="logo">Orraah</span>
+       <nav>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <img src="/orraah-logo.png" alt="Orraah" style={{ height: "60px", width: "auto" }} />
+            <span className="logo" style={{ color: "#0a0f1e", alignSelf: "center", lineHeight: "1" }}>Orraah</span>
+          </div>
           <div className="nav-right">
-            <Link href="/faq">FAQ</Link>
-            <Link href="/contact">Contact</Link>
-            <Link href="/download">Download</Link>
-            <Link href="/download" className="btn-get-started">Try it free</Link>
+            <a href="/store" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Store</a>
+            <a href="/faq" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>FAQ</a>
+            <a href="/contact" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Contact</a>
+            <a href="/download" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Download</a>
+            <a href="/download" className="btn-get-started">Try it free</a>
           </div>
         </nav>
 
