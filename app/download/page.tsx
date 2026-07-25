@@ -101,11 +101,14 @@ export default function DownloadPage() {
         }
 
         .dl-card-icon {
-            display: block;
-            height: 70px;
-            width: 70px;
-            object-fit: contain;
-          }
+          display: block;
+          height: 70px;
+          width: 70px;
+          object-fit: contain;
+          background: #ffffff;
+          border-radius: 12px;
+          padding: 8px;
+        }
 
         .dl-card-title {
           font-family: 'Syne', sans-serif;
