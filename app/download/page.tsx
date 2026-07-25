@@ -116,13 +116,6 @@ export default function DownloadPage() {
           font-size: 1.2rem;
         }
 
-        .dl-card-meta {
-          font-family: 'DM Mono', monospace;
-          font-size: 0.75rem;
-          color: var(--text-dim);
-          letter-spacing: 0.05em;
-        }
-
         .dl-btn {
           display: inline-flex;
           align-items: center;
@@ -182,7 +175,6 @@ export default function DownloadPage() {
           <div className="dl-card">
             <img src="/windowslogo.png" alt="Windows" className="dl-card-icon" />
             <div className="dl-card-title">Windows</div>
-            <div className="dl-card-meta">x86_64 · MSI Installer · v0.1.0</div>
             <a
               href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/windows-x86_64/Orraah_0.1.0_x64_en-US.msi"
               className="dl-btn"
@@ -194,7 +186,6 @@ export default function DownloadPage() {
           <div className="dl-card">
             <img src="/applelogo.jpeg" alt="macOS" className="dl-card-icon" />
             <div className="dl-card-title">macOS</div>
-            <div className="dl-card-meta">Apple Silicon (ARM) · DMG · v0.1.0</div>
             <a
               href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/darwin-aarch64/Orraah_0.1.0_aarch64.dmg"
               className="dl-btn"
@@ -206,7 +197,6 @@ export default function DownloadPage() {
           <div className="dl-card">
             <img src="/linuxlogo.jpeg" alt="Linux" className="dl-card-icon" />
             <div className="dl-card-title">Linux</div>
-            <div className="dl-card-meta">amd64 · DEB · v0.1.0</div>
             <a
               href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.0_amd64.deb"
               className="dl-btn"
