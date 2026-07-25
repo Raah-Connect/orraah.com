@@ -95,12 +95,17 @@ export default function DownloadPage() {
           background: var(--surface);
           display: flex;
           flex-direction: column;
+          align-items: center;
+          text-align: center;
           gap: 16px;
         }
 
         .dl-card-icon {
-          font-size: 2rem;
-        }
+            display: block;
+            height: 70px;
+            width: 70px;
+            object-fit: contain;
+          }
 
         .dl-card-title {
           font-family: 'Syne', sans-serif;
@@ -172,7 +177,7 @@ export default function DownloadPage() {
 
         <div className="dl-grid">
           <div className="dl-card">
-            <div className="dl-card-icon">🪟</div>
+            <img src="/windowslogo.png" alt="Windows" className="dl-card-icon" />
             <div className="dl-card-title">Windows</div>
             <div className="dl-card-meta">x86_64 · MSI Installer · v0.1.0</div>
             <a
@@ -184,7 +189,7 @@ export default function DownloadPage() {
           </div>
 
           <div className="dl-card">
-            <div className="dl-card-icon">🍎</div>
+            <img src="/applelogo.jpeg" alt="macOS" className="dl-card-icon" />
             <div className="dl-card-title">macOS</div>
             <div className="dl-card-meta">Apple Silicon (ARM) · DMG · v0.1.0</div>
             <a
@@ -196,9 +201,9 @@ export default function DownloadPage() {
           </div>
 
           <div className="dl-card">
-            <div className="dl-card-icon">🐧</div>
+            <img src="/linuxlogo.jpeg" alt="Linux" className="dl-card-icon" />
             <div className="dl-card-title">Linux</div>
-            <div className="dl-card-meta">amd64 · AppImage · v0.1.0</div>
+            <div className="dl-card-meta">amd64 · DEB · v0.1.0</div>
             <a
               href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.0_amd64.deb"
               className="dl-btn"
