@@ -1,8 +1,26 @@
 import Stripe from 'stripe';
+import { PRODUCT_CATALOG, type ProductId } from '@/lib/products';
 
-export async function POST() {
+type CheckoutBody = {
+  productId?: ProductId;
+};
+
+export async function POST(request: Request) {
   if (!process.env.STRIPE_SECRET_KEY) {
     return Response.json({ error: 'Stripe key not configured' }, { status: 500 });
+  }
+
+  let body: CheckoutBody = {};
+  try {
+    body = (await request.json()) as CheckoutBody;
+  } catch {
+    body = {};
+  }
+
+  const requestedProductId = body.productId ?? 'legacy-early-adopter';
+  const product = PRODUCT_CATALOG[requestedProductId];
+  if (!product) {
+    return Response.json({ error: 'Invalid product selected' }, { status: 400 });
   }
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -15,10 +33,10 @@ export async function POST() {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: 'Orraah — Early Adopter Lifetime Access',
-              description: 'Lifetime access + all future updates. First 500 customers only.',
+              name: product.name,
+              description: product.description,
             },
-            unit_amount: 4900,
+            unit_amount: product.unitAmount,
           },
           quantity: 1,
         },

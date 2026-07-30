@@ -270,6 +270,18 @@ export default function StorePage() {
             <Link href="/download" className="product-btn secondary">Get started free</Link>
           </div>
 
+          {/* COMBO FOUNDER PACKAGE */}
+          <div className="product-card featured">
+            <div className="product-tag">Best value</div>
+            <div className="product-title">Founder's Combo (Hosting/Remote Access/Commerce/AI)</div>
+            <div className="product-price">$175 <span>first 500 signups</span></div>
+            <div className="product-price-note">$500 after the first 500 signups</div>
+            <p className="product-desc">
+              Get all four founder packages in one bundle at a discount: Friends &amp; Family Hosting, Remote Access + Custom Subdomain, Peer-to-Peer Commerce &amp; App Store, and AI Package.
+            </p>
+            <Link href="/store/checkout/founders-combo" className="product-btn">Claim combo pricing</Link>
+          </div>
+
           {/* PLANET */}
           <div className="product-card featured">
             <div className="product-tag">Most popular</div>
@@ -285,7 +297,7 @@ export default function StorePage() {
                 Planets can spawn dedicated sub-servers (called moons) for specific tasks or apps — available via terminal today, with in-app support coming soon.
               </p>
             </details>
-            <Link href="/planets" className="product-btn">Get a planet</Link>
+            <Link href="/store/checkout/planet-identity" className="product-btn">Get a planet</Link>
           </div>
 
           {/* FOUNDER PACKAGE 1 */}
@@ -297,7 +309,7 @@ export default function StorePage() {
             <p className="product-desc">
               Host servers for your friends and family under your own infrastructure.
             </p>
-            <button className="product-btn">Claim founder pricing</button>
+            <Link href="/store/checkout/friends-family-hosting" className="product-btn">Claim founder pricing</Link>
           </div>
 
           {/* FOUNDER PACKAGE 2 */}
@@ -309,7 +321,7 @@ export default function StorePage() {
             <p className="product-desc">
               Access your server remotely with your own subdomain (yourname.orraah.com).
             </p>
-            <button className="product-btn">Claim founder pricing</button>
+            <Link href="/store/checkout/remote-access-custom-subdomain" className="product-btn">Claim founder pricing</Link>
           </div>
           {/* FOUNDER PACKAGE 3 */}
             <div className="product-card">
@@ -320,7 +332,7 @@ export default function StorePage() {
               <p className="product-desc">
                 Buy, sell, and discover apps directly with other Orraah users — no middleman, no platform cut.
               </p>
-              <button className="product-btn">Claim founder pricing</button>
+              <Link href="/store/checkout/p2p-commerce-app-store" className="product-btn">Claim founder pricing</Link>
             </div>
 
             {/* FOUNDER PACKAGE 4 */}
@@ -332,7 +344,7 @@ export default function StorePage() {
               <p className="product-desc">
                 Run your own AI assistant and sandbox on your virtual server — fully private, fully yours.
               </p>
-              <button className="product-btn">Claim founder pricing</button>
+              <Link href="/store/checkout/ai-package" className="product-btn">Claim founder pricing</Link>
             </div>
         </section>
 
