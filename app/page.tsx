@@ -84,6 +84,24 @@ export default function Home() {
           border-bottom: 1px solid var(--border);
         }
 
+        .brand {
+          transition: opacity 0.2s;
+        }
+
+        .brand:hover {
+          opacity: 0.82;
+        }
+
+        .brand img {
+          height: 60px;
+          width: auto;
+        }
+
+        @media (max-width: 480px) {
+          .brand img { height: 40px; }
+          .brand .logo { font-size: 1.15rem; }
+        }
+
         .logo {
           font-family: 'Syne', sans-serif;
           font-weight: 800;
@@ -638,10 +656,10 @@ export default function Home() {
       <main>
         {/* NAV */}
         <nav>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <img src="/orraah-logo.png" alt="Orraah" style={{ height: "60px", width: "auto" }} />
-            <span className="logo" style={{ color: "#1a6fe8", alignSelf: "center", lineHeight: "1" }}>Orraah</span>
-          </div>
+          <Link href="/" className="brand" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
+            <img src="/orraah-logo.png" alt="" style={{ width: "auto" }} />
+            <span className="logo" style={{ color: "#87CEFA", alignSelf: "center", lineHeight: "1" }}>Orraah</span>
+          </Link>
           <div className="nav-right">
             <a href="/store" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Store</a>
             <a href="/faq" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>FAQ</a>
@@ -775,7 +793,7 @@ export default function Home() {
 
         {/* FOOTER */}
         <footer>
-          <div className="footer-logo"><span className="logo" style={{ color: "#0a0f1e" }}>Orraah</span></div>
+          <div className="footer-logo"><span className="logo" style={{ color: "#87CEFA" }}>Orraah</span></div>
 
           <div className="social-links">
             <a href="https://x.com/orraah" target="_blank" rel="noopener noreferrer" className="social-btn x" title="X (Twitter)">
