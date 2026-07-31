@@ -640,7 +640,7 @@ export default function Home() {
         <nav>
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <img src="/orraah-logo.png" alt="Orraah" style={{ height: "60px", width: "auto" }} />
-            <span className="logo" style={{ color: "#0a0f1e", alignSelf: "center", lineHeight: "1" }}>Orraah</span>
+            <span className="logo" style={{ color: "#1a6fe8", alignSelf: "center", lineHeight: "1" }}>Orraah</span>
           </div>
           <div className="nav-right">
             <a href="/store" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Store</a>
