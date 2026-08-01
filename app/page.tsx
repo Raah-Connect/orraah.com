@@ -14,8 +14,8 @@ export default function Home() {
           --bg: #ffffff;
           --surface: #f4f7fb;
           --border: #dde3ed;
-          --gold: #1a6fe8;
-          --gold-dim: #1452b3;
+          --blue: #1a6fe8;
+          --blue-dim: #1452b3;
           --text: #0a0f1e;
           --text-dim: #4a5568;
           --accent: #16a34a;
@@ -661,7 +661,7 @@ export default function Home() {
           <span 
             className="logo" 
             style={{ 
-              color: "#5B9BD5",
+              color: "#1a6fe8",
               fontSize: "2.2rem",
               fontWeight: "700",
               alignSelf: "center", 
