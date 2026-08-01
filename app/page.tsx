@@ -656,10 +656,34 @@ export default function Home() {
       <main>
         {/* NAV */}
         <nav>
-          <Link href="/" className="brand" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
-            <img src="/orraah-logo.png" alt="" style={{ width: "auto" }} />
-            <span className="logo" style={{ color: "#87CEFA", alignSelf: "center", lineHeight: "1" }}>Orraah</span>
-          </Link>
+                  <Link href="/" className="brand" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
+          <img src="/orraah-logo.png" alt="" style={{ width: "auto" }} />
+          <span 
+            className="logo" 
+            style={{ 
+              color: "#5B9BD5",
+              fontSize: "2.2rem",
+              fontWeight: "700",
+              alignSelf: "center", 
+              lineHeight: "1",
+              letterSpacing: "-0.5px",
+              fontFamily: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
+              transition: "all 0.3s ease",
+              cursor: "default"
+            }}
+            onMouseEnter={(e) => {
+              const target = e.currentTarget as HTMLElement;
+              target.style.transform = "scale(1.05)";
+              target.style.textShadow = "0 4px 8px rgba(91, 155, 213, 0.3)";
+            }}
+            onMouseLeave={(e) => {
+              const target = e.currentTarget as HTMLElement;
+              target.style.transform = "scale(1)";
+            }}
+          >
+            Orraah
+          </span>
+        </Link>
           <div className="nav-right">
             <a href="/store" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Store</a>
             <a href="/faq" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>FAQ</a>
