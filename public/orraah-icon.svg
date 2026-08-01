@@ -3,13 +3,13 @@
 
   <!-- crossing peer-to-peer lines, offset so they don't share one center point -->
   <line x1="48" y1="40" x2="145" y2="150" stroke="#FBF5B4" stroke-width="8" stroke-linecap="round"/>
-  <line x1="35" y1="128" x2="158" y2="118" stroke="#FBF5B4" stroke-width="7" stroke-linecap="round"/>
+  <line x1="35" y1="73" x2="158" y2="88" stroke="#FBF5B4" stroke-width="7" stroke-linecap="round"/>
   <line x1="58" y1="162" x2="148" y2="48" stroke="#FBF5B4" stroke-width="7" stroke-linecap="round"/>
 
   <!-- peer nodes (circles) -->
   <circle cx="48" cy="40" r="11" fill="#FBF5B4"/>
-  <circle cx="35" cy="128" r="9" fill="#FBF5B4"/>
-  <circle cx="158" cy="118" r="9" fill="#FBF5B4"/>
+  <circle cx="35" cy="73" r="9" fill="#FBF5B4"/>
+  <circle cx="158" cy="88" r="9" fill="#FBF5B4"/>
   <circle cx="58" cy="162" r="9" fill="#FBF5B4"/>
   <circle cx="148" cy="48" r="9" fill="#FBF5B4"/>
 
