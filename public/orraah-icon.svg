@@ -2,17 +2,17 @@
   <circle cx="100" cy="100" r="95" fill="#1868B7"/>
 
   <!-- crossing peer-to-peer lines, offset so they don't share one center point -->
-  <line x1="48" y1="40" x2="145" y2="150" stroke="#F0556B" stroke-width="8" stroke-linecap="round"/>
-  <line x1="35" y1="128" x2="158" y2="118" stroke="#F7E08A" stroke-width="7" stroke-linecap="round"/>
-  <line x1="58" y1="162" x2="148" y2="48" stroke="#9DDBA6" stroke-width="7" stroke-linecap="round"/>
+  <line x1="48" y1="40" x2="145" y2="150" stroke="#FBF5B4" stroke-width="8" stroke-linecap="round"/>
+  <line x1="35" y1="128" x2="158" y2="118" stroke="#FBF5B4" stroke-width="7" stroke-linecap="round"/>
+  <line x1="58" y1="162" x2="148" y2="48" stroke="#FBF5B4" stroke-width="7" stroke-linecap="round"/>
 
   <!-- peer nodes (circles) -->
-  <circle cx="48" cy="40" r="11" fill="#F0556B"/>
-  <circle cx="35" cy="128" r="9" fill="#F7E08A"/>
-  <circle cx="158" cy="118" r="9" fill="#F7E08A"/>
-  <circle cx="58" cy="162" r="9" fill="#9DDBA6"/>
-  <circle cx="148" cy="48" r="9" fill="#9DDBA6"/>
+  <circle cx="48" cy="40" r="11" fill="#FBF5B4"/>
+  <circle cx="35" cy="128" r="9" fill="#FBF5B4"/>
+  <circle cx="158" cy="118" r="9" fill="#FBF5B4"/>
+  <circle cx="58" cy="162" r="9" fill="#FBF5B4"/>
+  <circle cx="148" cy="48" r="9" fill="#FBF5B4"/>
 
-  <!-- self node: same red line, but reshaped as a diamond instead of a circle -->
-  <rect x="130.5" y="134.5" width="29" height="29" rx="4" fill="#F0556B" transform="rotate(45 145 149)"/>
+  <!-- self node: diamond, same yellow -->
+  <rect x="130.5" y="134.5" width="29" height="29" rx="4" fill="#FBF5B4" transform="rotate(45 145 149)"/>
 </svg>
