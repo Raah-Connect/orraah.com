@@ -187,7 +187,7 @@ export default function DownloadPage() {
             <img src="/applelogo.jpeg" alt="macOS" className="dl-card-icon" />
             <div className="dl-card-title">macOS</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/darwin-aarch64/Orraah_0.1.0_aarch64.dmg"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/darwin-aarch64/Orraah_0.1.1_aarch64.dmg"
               className="dl-btn"
             >
               ↓ Download for macOS
