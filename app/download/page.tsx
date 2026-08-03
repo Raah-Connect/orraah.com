@@ -176,7 +176,7 @@ export default function DownloadPage() {
             <img src="/windowslogo.png" alt="Windows" className="dl-card-icon" />
             <div className="dl-card-title">Windows</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/windows-x86_64/Orraah_0.1.0_x64_en-US.msi"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/windows-x86_64/Orraah_0.1.1_x64_en-US.msi"
               className="dl-btn"
             >
               ↓ Download for Windows
@@ -198,7 +198,7 @@ export default function DownloadPage() {
             <img src="/linuxlogo.jpeg" alt="Linux" className="dl-card-icon" />
             <div className="dl-card-title">Linux</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.0_amd64.deb"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.1_amd64.deb"
               className="dl-btn"
             >
               ↓ Download for Linux
