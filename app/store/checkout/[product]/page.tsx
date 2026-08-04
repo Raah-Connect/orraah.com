@@ -1,9 +1,37 @@
 "use client";
 
+import { initializePaddle, type Paddle } from "@paddle/paddle-js";
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { PRODUCT_CATALOG, type ProductConfig, type ProductId } from "@/lib/products";
+
+type PaddleEnv = "sandbox" | "production";
+
+const PADDLE_ENVIRONMENT = process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT;
+const PADDLE_CLIENT_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
+
+function getPaddleEnvironment(): PaddleEnv {
+  const env = PADDLE_ENVIRONMENT;
+  if (!env) {
+    throw new Error("Missing required environment variable: NEXT_PUBLIC_PADDLE_ENVIRONMENT");
+  }
+  if (env !== "sandbox" && env !== "production") {
+    throw new Error("NEXT_PUBLIC_PADDLE_ENVIRONMENT must be exactly 'sandbox' or 'production'");
+  }
+  return env;
+}
+
+function getPaddleClientToken(): string {
+  const token = PADDLE_CLIENT_TOKEN;
+  if (!token) {
+    throw new Error("Missing required environment variable: NEXT_PUBLIC_PADDLE_CLIENT_TOKEN");
+  }
+  if (getPaddleEnvironment() === "sandbox" && !token.startsWith("test_")) {
+    throw new Error("Sandbox requires NEXT_PUBLIC_PADDLE_CLIENT_TOKEN starting with 'test_'");
+  }
+  return token;
+}
 
 export default function ProductCheckoutPage() {
   const params = useParams<{ product: string }>();
@@ -23,22 +51,63 @@ export default function ProductCheckoutPage() {
     setError(null);
 
     try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: product.id }),
-      });
-
-      const payload = (await response.json()) as { url?: string; error?: string };
-
-      if (!response.ok || !payload.url) {
-        setError(payload.error ?? "Unable to start checkout. Please try again.");
+      if (!product.paddlePriceId) {
+        setError("Missing Paddle price ID for this product.");
         return;
       }
 
-      window.location.href = payload.url;
-    } catch {
-      setError("Unable to start checkout. Please try again.");
+      if (!product.paddlePriceId.startsWith("pri_")) {
+        setError(
+          `Invalid Paddle price ID for ${product.name}. Use a price ID starting with 'pri_' (not product IDs like 'pro_').`
+        );
+        return;
+      }
+
+      const paddle: Paddle | undefined = await initializePaddle({
+        environment: getPaddleEnvironment(),
+        token: getPaddleClientToken(),
+        debug: getPaddleEnvironment() === "sandbox",
+        eventCallback: (event) => {
+          if (event.name === "checkout.error" && event.detail) {
+            setError(`Paddle checkout error: ${event.detail}`);
+          }
+        },
+      });
+
+      if (!paddle) {
+        setError("Unable to initialize Paddle checkout.");
+        return;
+      }
+
+      try {
+        await paddle.PricePreview({
+          items: [{ priceId: product.paddlePriceId, quantity: 1 }],
+        });
+      } catch (previewError) {
+        const message =
+          previewError instanceof Error
+            ? previewError.message
+            : "Unable to preview this Paddle price.";
+        setError(
+          `Paddle could not preview this product price. Verify this pri_ ID belongs to the same sandbox account as your token. Details: ${message}`
+        );
+        return;
+      }
+
+      paddle.Checkout.open({
+        items: [{ priceId: product.paddlePriceId, quantity: 1 }],
+        settings: {
+          displayMode: "overlay",
+          variant: "one-page",
+          successUrl: `${window.location.origin}/welcome`,
+        },
+      });
+    } catch (checkoutError) {
+      const message =
+        checkoutError instanceof Error
+          ? checkoutError.message
+          : "Unable to start checkout. Please try again.";
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -63,7 +132,7 @@ export default function ProductCheckoutPage() {
         <h1 style={styles.title}>{product.name}</h1>
         <p style={styles.price}>{product.priceLabel}</p>
         <p style={styles.text}>{product.description}</p>
-        <p style={styles.note}>You will be redirected to Stripe to complete payment securely.</p>
+        <p style={styles.note}>A secure Paddle one-page overlay will open to complete payment.</p>
 
         {error && <p style={styles.error}>{error}</p>}
 

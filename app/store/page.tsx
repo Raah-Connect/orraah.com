@@ -1,13 +1,11 @@
-"use client";
-
 import Link from "next/link";
 import TopNavigator from "../components/TopNavigator";
-
 export default function StorePage() {
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
         :root {
           --bg: #ffffff;
@@ -17,7 +15,6 @@ export default function StorePage() {
           --gold-dim: #1452b3;
           --text: #0a0f1e;
           --text-dim: #4a5568;
-          --green: #16a34a;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,21 +32,21 @@ export default function StorePage() {
         }
 
         .store-hero {
-          padding: 80px 0 40px;
-          max-width: 700px;
+          padding: 80px 0 30px;
+          max-width: 760px;
         }
 
         .store-hero h1 {
           font-family: 'Syne', sans-serif;
-          font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+          font-size: clamp(1.9rem, 3.6vw, 2.8rem);
           font-weight: 700;
-          line-height: 1.3;
+          line-height: 1.25;
           letter-spacing: -0.02em;
-          margin-bottom: 20px;
+          margin-bottom: 16px;
         }
 
         .store-hero p {
-          font-size: 1.05rem;
+          font-size: 1.02rem;
           color: var(--text-dim);
           line-height: 1.7;
         }
@@ -125,9 +122,23 @@ export default function StorePage() {
           flex-grow: 1;
         }
 
-        .product-desc a {
+        details.product-detail {
+          margin-top: -8px;
+          margin-bottom: 20px;
+        }
+
+        details.product-detail summary {
+          font-size: 0.85rem;
           color: var(--gold);
-          text-decoration: none;
+          cursor: pointer;
+          font-family: 'DM Mono', monospace;
+        }
+
+        details.product-detail p {
+          font-size: 0.85rem;
+          color: var(--text-dim);
+          margin-top: 10px;
+          line-height: 1.6;
         }
 
         .product-btn {
@@ -159,25 +170,6 @@ export default function StorePage() {
           background: rgba(26,111,232,0.06);
         }
 
-        details.product-detail {
-          margin-top: -8px;
-          margin-bottom: 20px;
-        }
-
-        details.product-detail summary {
-          font-size: 0.85rem;
-          color: var(--gold);
-          cursor: pointer;
-          font-family: 'DM Mono', monospace;
-        }
-
-        details.product-detail p {
-          font-size: 0.85rem;
-          color: var(--text-dim);
-          margin-top: 10px;
-          line-height: 1.6;
-        }
-
         footer {
           border-top: 1px solid var(--border);
           padding: 40px 0;
@@ -194,99 +186,71 @@ export default function StorePage() {
         <section className="store-hero">
           <h1>Own your identity. Own your server.</h1>
           <p>
-            Start free with a comet, then upgrade whenever you&apos;re ready. Every product here gives you something you actually own — not a subscription to someone else&apos;s platform.
+            One-time purchases. No recurring subscriptions. Pick the package that fits what you want to own.
           </p>
         </section>
 
         <section className="product-grid">
-          {/* FREE COMET */}
           <div className="product-card">
             <div className="product-tag">Start here</div>
             <div className="product-title">Comet</div>
             <div className="product-price">Free</div>
             <div className="product-price-note">No signup required to try</div>
             <p className="product-desc">
-              Boot a free Urbit server instantly and try Orraah with zero commitment. Upgrade to a planet anytime for a identity that&apos;s truly yours.
+              Boot a free Urbit server instantly and try Orraah with zero commitment.
             </p>
             <Link href="/download" className="product-btn secondary">Get started free</Link>
           </div>
 
-          {/* COMBO FOUNDER PACKAGE */}
           <div className="product-card featured">
             <div className="product-tag">Best value</div>
-            <div className="product-title">Founder's Combo (Hosting/Remote Access/Commerce/AI)</div>
-            <div className="product-price">$175 <span>first 500 signups</span></div>
-            <div className="product-price-note">$500 after the first 500 signups</div>
+            <div className="product-title">Founder Combo Kit</div>
+            <div className="product-price">$175 <span>one-time</span></div>
+            <div className="product-price-note">First 500 signups</div>
             <p className="product-desc">
-              Get all four founder packages in one bundle at a discount: Friends &amp; Family Hosting, Remote Access + Custom Subdomain, Peer-to-Peer Commerce &amp; App Store, and AI Package.
+              Bundle with Friends &amp; Family Hosting, Remote Access, Peer-to-Peer Commerce, and AI package.
             </p>
             <Link href="/store/checkout/founders-combo" className="product-btn">Claim combo pricing</Link>
           </div>
 
-          {/* PLANET */}
           <div className="product-card featured">
             <div className="product-tag">Most popular</div>
             <div className="product-title">Planet Identity</div>
             <div className="product-price">$10</div>
             <div className="product-price-note">One-time purchase</div>
             <p className="product-desc">
-              Your own Urbit planet — a real identity on the network, owned by you.
+              Your own Urbit planet - a real identity on the network, owned by you.
             </p>
             <details className="product-detail">
               <summary>Advanced: what can a planet do?</summary>
               <p>
-                Planets can spawn dedicated sub-servers (called moons) for specific tasks or apps — available via terminal today, with in-app support coming soon.
+                Planets can spawn dedicated sub-servers (called moons) for specific tasks or apps - available via terminal today, with in-app support coming soon.
               </p>
             </details>
             <Link href="/store/checkout/planet-identity" className="product-btn">Get a planet</Link>
           </div>
 
-          {/* FOUNDER PACKAGE 1 */}
           <div className="product-card">
             <div className="product-tag">Founder package</div>
-            <div className="product-title">Friends &amp; Family Hosting</div>
-            <div className="product-price">$50 <span>first 500 signups</span></div>
-            <div className="product-price-note">$149 after the first 500 signups</div>
+            <div className="product-title">Peer-to-Peer Commerce &amp; App Store</div>
+            <div className="product-price">$50 <span>one-time</span></div>
+            <div className="product-price-note">First 500 signups</div>
             <p className="product-desc">
-              Host servers for your friends and family under your own infrastructure.
+              Buy, sell, and discover apps directly with other Orraah users.
             </p>
-            <Link href="/store/checkout/friends-family-hosting" className="product-btn">Claim founder pricing</Link>
+            <Link href="/store/checkout/p2p-commerce-app-store" className="product-btn">Claim founder pricing</Link>
           </div>
 
-          {/* FOUNDER PACKAGE 2 */}
           <div className="product-card">
             <div className="product-tag">Founder package</div>
             <div className="product-title">Remote Access + Custom Subdomain</div>
-            <div className="product-price">$50 <span>/ year</span></div>
-            <div className="product-price-note">First-year price for the first 500 signups</div>
+            <div className="product-price">$50 <span>one-time</span></div>
+            <div className="product-price-note">First 500 signups</div>
             <p className="product-desc">
               Access your server remotely with your own subdomain (yourname.orraah.com).
             </p>
             <Link href="/store/checkout/remote-access-custom-subdomain" className="product-btn">Claim founder pricing</Link>
           </div>
-          {/* FOUNDER PACKAGE 3 */}
-            <div className="product-card">
-              <div className="product-tag">Founder package</div>
-              <div className="product-title">Peer-to-Peer Commerce &amp; App Store</div>
-               <div className="product-price">$50 <span>first 500 signups</span></div>
-              <div className="product-price-note">$149 after the first 500 signups</div>
-              <p className="product-desc">
-                Buy, sell, and discover apps directly with other Orraah users — no middleman, no platform cut.
-              </p>
-              <Link href="/store/checkout/p2p-commerce-app-store" className="product-btn">Claim founder pricing</Link>
-            </div>
-
-            {/* FOUNDER PACKAGE 4 */}
-            <div className="product-card">
-              <div className="product-tag">Founder package</div>
-              <div className="product-title">AI Package</div>
-              <div className="product-price">$50 <span>first 500 signups</span></div>
-              <div className="product-price-note">$149 after the first 500 signups</div>
-              <p className="product-desc">
-                Run your own AI assistant and sandbox on your virtual server — fully private, fully yours.
-              </p>
-              <Link href="/store/checkout/ai-package" className="product-btn">Claim founder pricing</Link>
-            </div>
         </section>
 
         <footer>
