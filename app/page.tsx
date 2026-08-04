@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import TopNavigator from "./components/TopNavigator";
 
 export default function Home() {
 
@@ -75,33 +76,6 @@ export default function Home() {
           padding: 0 24px;
         }
 
-        /* NAV */
-        nav {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 28px 0;
-          border-bottom: 1px solid var(--border);
-        }
-
-        .brand {
-          transition: opacity 0.2s;
-        }
-
-        .brand:hover {
-          opacity: 0.82;
-        }
-
-        .brand img {
-          height: 60px;
-          width: auto;
-        }
-
-        @media (max-width: 480px) {
-          .brand img { height: 40px; }
-          .brand .logo { font-size: 1.15rem; }
-        }
-
         .logo {
           font-family: 'Syne', sans-serif;
           font-weight: 800;
@@ -112,34 +86,6 @@ export default function Home() {
 
         .logo span { color: var(--text); }
 
-        .nav-right {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          flex-wrap: nowrap;
-        }
-
-        @media (max-width: 640px) {
-          nav {
-            gap: 10px;
-          }
-
-          .nav-right {
-            max-width: min(56vw, 240px);
-            gap: 10px;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-          }
-
-          .nav-right a {
-            font-size: 0.82rem !important;
-          }
-
-          .nav-right .btn-get-started {
-            padding: 8px 14px;
-          }
-        }
-
         .nav-badge {
           font-family: 'DM Mono', monospace;
           font-size: 0.7rem;
@@ -148,31 +94,6 @@ export default function Home() {
           padding: 4px 12px;
           border-radius: 20px;
           letter-spacing: 0.1em;
-        }
-
-        .btn-get-started {
-          background: var(--gold);
-          color: #ffffff;
-          border: none;
-          padding: 10px 22px;
-          border-radius: 10px;
-          font-family: 'Syne', sans-serif;
-          font-weight: 700;
-          font-size: 0.88rem;
-          cursor: pointer;
-          transition: all 0.2s;
-          white-space: nowrap;
-          letter-spacing: 0.01em;
-          text-decoration: none;
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-        }
-
-        .btn-get-started:hover {
-          background: var(--gold-dim);
-          transform: translateY(-1px);
-          box-shadow: 0 8px 24px rgba(26,111,232,0.25);
         }
 
         @media (max-width: 480px) {
@@ -677,43 +598,7 @@ export default function Home() {
 
       <main>
         {/* NAV */}
-        <nav>
-                  <Link href="/" className="brand" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-          <img src="/orraah-logo.png" alt="" style={{ width: "auto" }} />
-          <span 
-            className="logo" 
-            style={{ 
-              color: "#1a6fe8",
-              fontSize: "2.2rem",
-              fontWeight: "700",
-              alignSelf: "center", 
-              lineHeight: "1",
-              letterSpacing: "-0.5px",
-              fontFamily: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
-              transition: "all 0.3s ease",
-              cursor: "default"
-            }}
-            onMouseEnter={(e) => {
-              const target = e.currentTarget as HTMLElement;
-              target.style.transform = "scale(1.05)";
-              target.style.textShadow = "0 4px 8px rgba(91, 155, 213, 0.3)";
-            }}
-            onMouseLeave={(e) => {
-              const target = e.currentTarget as HTMLElement;
-              target.style.transform = "scale(1)";
-            }}
-          >
-            Orraah
-          </span>
-        </Link>
-          <div className="nav-right">
-            <a href="/store" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Store</a>
-            <a href="/faq" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>FAQ</a>
-            <a href="/contact" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Contact</a>
-            <a href="/download" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Download</a>
-            <a href="/download" className="btn-get-started">Try it free</a>
-          </div>
-        </nav>
+        <TopNavigator />
 
 {/* HERO */}
         <section>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TopNavigator from "../components/TopNavigator";
 
 export default function DownloadPage() {
   return (
@@ -23,43 +24,6 @@ export default function DownloadPage() {
           color: var(--text);
           font-family: 'DM Sans', sans-serif;
         }
-
-        .dl-nav {
-          max-width: 900px;
-          margin: 0 auto;
-          padding: 28px 24px;
-          border-bottom: 1px solid var(--border);
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .logo {
-          font-family: 'Syne', sans-serif;
-          font-weight: 800;
-          font-size: 1.4rem;
-          letter-spacing: -0.02em;
-          color: var(--text);
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-
-        .dl-nav-right {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .dl-nav-right a {
-          text-decoration: none;
-          color: var(--text);
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.95rem;
-        }
-
-        .dl-nav-right a:hover { color: var(--gold); }
 
         .dl-main {
           max-width: 900px;
@@ -152,20 +116,8 @@ export default function DownloadPage() {
         }
       `}</style>
 
-      <nav className="dl-nav">
-        <Link href="/" className="logo">
-          <img src="/orraah-logo.png" alt="Orraah" style={{ height: "48px", width: "auto" }} />
-          Orraah
-        </Link>
-        <div className="dl-nav-right">
-          <a href="/store">Store</a>
-          <a href="/faq">FAQ</a>
-          <a href="/contact">Contact</a>
-          <a href="/download">Download</a>
-        </div>
-      </nav>
-
       <main className="dl-main">
+        <TopNavigator />
         <h1 className="dl-title">Download Orraah</h1>
         <p className="dl-sub">
           Version 0.1.0 — Available for Windows, macOS, and Linux.

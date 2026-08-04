@@ -1,3 +1,5 @@
+import TopNavigator from './TopNavigator';
+
 export default function LegalPage({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <>
@@ -18,42 +20,6 @@ export default function LegalPage({ title, children }: { title: string; children
           color: var(--text);
           font-family: 'DM Sans', sans-serif;
         }
-
-        .legal-nav {
-          max-width: 800px;
-          margin: 0 auto;
-          padding: 28px 24px;
-          border-bottom: 1px solid var(--border);
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .legal-logo {
-          font-family: 'Syne', sans-serif;
-          font-weight: 800;
-          font-size: 1.4rem;
-          color: #0a0f1e;
-          text-decoration: none;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-
-        .legal-nav-right {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .legal-nav-right a {
-          text-decoration: none;
-          color: #0a0f1e;
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.95rem;
-        }
-
-        .legal-nav-right a:hover { color: var(--gold); }
 
         .legal-wrap {
           max-width: 800px;
@@ -104,18 +70,9 @@ export default function LegalPage({ title, children }: { title: string; children
         }
       `}</style>
 
-      <nav className="legal-nav">
-        <a href="/" className="legal-logo">
-          <img src="/orraah-logo.png" alt="Orraah" style={{ height: "48px", width: "auto" }} />
-          Orraah
-        </a>
-        <div className="legal-nav-right">
-          <a href="/store">Store</a>
-          <a href="/faq">FAQ</a>
-          <a href="/contact">Contact</a>
-          <a href="/download">Download</a>
-        </div>
-      </nav>
+      <div style={{ maxWidth: "800px", margin: "0 auto", padding: "0 24px" }}>
+        <TopNavigator />
+      </div>
 
       <div className="legal-wrap">
         <h1>{title}</h1>

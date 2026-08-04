@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import TopNavigator from "../components/TopNavigator";
 
 export default function StorePage() {
   return (
@@ -31,54 +32,6 @@ export default function StorePage() {
           max-width: 1100px;
           margin: 0 auto;
           padding: 0 24px;
-        }
-
-        nav {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 28px 0;
-          border-bottom: 1px solid var(--border);
-        }
-
-        .logo {
-          font-family: 'Syne', sans-serif;
-          font-weight: 800;
-          font-size: 1.4rem;
-          letter-spacing: -0.02em;
-          color: var(--gold);
-        }
-
-        .nav-right {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-        }
-
-        .nav-right a {
-          text-decoration: none;
-          color: var(--text);
-          font-size: 0.95rem;
-        }
-
-        .btn-get-started {
-          background: var(--gold);
-          color: #ffffff;
-          border: none;
-          padding: 10px 22px;
-          border-radius: 10px;
-          font-family: 'Syne', sans-serif;
-          font-weight: 700;
-          font-size: 0.88rem;
-          text-decoration: none;
-          display: inline-flex;
-          align-items: center;
-          transition: all 0.2s;
-        }
-
-        .btn-get-started:hover {
-          background: var(--gold-dim);
-          transform: translateY(-1px);
         }
 
         .store-hero {
@@ -236,19 +189,7 @@ export default function StorePage() {
       `}</style>
 
       <main className="store-main">
-       <nav>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <img src="/orraah-logo.png" alt="Orraah" style={{ height: "60px", width: "auto" }} />
-            <span className="logo" style={{ color: "#0a0f1e", alignSelf: "center", lineHeight: "1" }}>Orraah</span>
-          </div>
-          <div className="nav-right">
-            <a href="/store" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Store</a>
-            <a href="/faq" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>FAQ</a>
-            <a href="/contact" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Contact</a>
-            <a href="/download" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Download</a>
-            <a href="/download" className="btn-get-started">Try it free</a>
-          </div>
-        </nav>
+        <TopNavigator />
 
         <section className="store-hero">
           <h1>Own your identity. Own your server.</h1>

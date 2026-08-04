@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import TopNavigator from "../components/TopNavigator";
 
 const API_URL = process.env.NEXT_PUBLIC_PLANETS_API_URL ?? "";
 
@@ -58,29 +59,6 @@ export default function PlanetsPage() {
           max-width: 1100px;
           margin: 0 auto;
           padding: 0 24px;
-        }
-
-        nav {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 28px 0;
-          border-bottom: 1px solid var(--border);
-        }
-
-        .logo {
-          font-family: 'Syne', sans-serif;
-          font-weight: 800;
-          font-size: 1.4rem;
-          letter-spacing: -0.02em;
-          color: var(--gold);
-        }
-
-        .nav-right a {
-          text-decoration: none;
-          color: var(--text);
-          font-size: 0.95rem;
-          margin-left: 16px;
         }
 
         .planets-hero {
@@ -153,19 +131,7 @@ export default function PlanetsPage() {
       `}</style>
 
       <main className="planets-main">
-         <nav>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <img src="/orraah-logo.png" alt="Orraah" style={{ height: "60px", width: "auto" }} />
-            <span className="logo" style={{ color: "#0a0f1e", alignSelf: "center", lineHeight: "1" }}>Orraah</span>
-          </div>
-          <div className="nav-right">
-            <a href="/store" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Store</a>
-            <a href="/faq" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>FAQ</a>
-            <a href="/contact" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Contact</a>
-            <a href="/download" style={{ textDecoration: "none", color: "var(--text)", fontFamily: "var(--font-body)", fontSize: "0.95rem" }}>Download</a>
-            <a href="/download" className="btn-get-started">Try it free</a>
-          </div>
-        </nav>
+        <TopNavigator />
 
 
         <section className="planets-hero">
