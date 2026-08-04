@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 type TopNavigatorProps = {
@@ -84,10 +86,10 @@ export default function TopNavigator({
           color: var(--gold-dim, #1452b3);
         }
 
-        .top-nav-cta {
-          background: var(--gold, #1a6fe8);
+        .top-nav-right .top-nav-cta {
+          background-color: var(--gold, #1a6fe8);
           color: #ffffff;
-          border: none;
+          border: 1px solid var(--gold, #1a6fe8);
           padding: 10px 22px;
           border-radius: 10px;
           font-family: "Syne", sans-serif;
@@ -101,8 +103,9 @@ export default function TopNavigator({
           align-items: center;
         }
 
-        .top-nav-cta:hover {
-          background: var(--gold-dim, #1452b3);
+        .top-nav-right .top-nav-cta:hover {
+          background-color: var(--gold-dim, #1452b3);
+          border-color: var(--gold-dim, #1452b3);
           transform: translateY(-1px);
           box-shadow: 0 8px 24px rgba(26, 111, 232, 0.2);
         }
@@ -123,7 +126,7 @@ export default function TopNavigator({
             font-size: 0.82rem;
           }
 
-          .top-nav-cta {
+          .top-nav-right .top-nav-cta {
             padding: 8px 14px;
           }
         }
