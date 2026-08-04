@@ -11,6 +11,22 @@ export default function TopNavigator({
   ctaHref = "/download",
   ctaLabel = "Try it free",
 }: TopNavigatorProps) {
+  const ctaStyle = {
+    backgroundColor: "var(--gold, #1a6fe8)",
+    color: "#ffffff",
+    border: "1px solid var(--gold, #1a6fe8)",
+    padding: "10px 22px",
+    borderRadius: "10px",
+    fontFamily: '"Syne", sans-serif',
+    fontWeight: 700,
+    fontSize: "0.88rem",
+    whiteSpace: "nowrap" as const,
+    letterSpacing: "0.01em",
+    textDecoration: "none",
+    display: "inline-flex",
+    alignItems: "center",
+  };
+
   return (
     <>
       <nav className="top-nav" aria-label="Main navigation">
@@ -24,7 +40,7 @@ export default function TopNavigator({
           <Link href="/faq" className="top-nav-link">FAQ</Link>
           <Link href="/contact" className="top-nav-link">Contact</Link>
           <Link href="/download" className="top-nav-link">Download</Link>
-          <Link href={ctaHref} className="top-nav-cta">{ctaLabel}</Link>
+          <Link href={ctaHref} className="top-nav-cta" style={ctaStyle}>{ctaLabel}</Link>
         </div>
       </nav>
 
@@ -63,7 +79,7 @@ export default function TopNavigator({
           font-weight: 700;
           line-height: 1;
           letter-spacing: -0.5px;
-          font-family: "Syne", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+          font-family: "Sora", "Cabinet Grotesk", "Syne", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
           white-space: nowrap;
         }
 
@@ -138,6 +154,7 @@ export default function TopNavigator({
 
           .top-nav-logo-text {
             font-size: 1.15rem;
+            font-family: "Sora", "Cabinet Grotesk", "Syne", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
           }
         }
       `}</style>
