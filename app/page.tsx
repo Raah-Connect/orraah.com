@@ -116,6 +116,28 @@ export default function Home() {
           display: flex;
           align-items: center;
           gap: 16px;
+          flex-wrap: nowrap;
+        }
+
+        @media (max-width: 640px) {
+          nav {
+            gap: 10px;
+          }
+
+          .nav-right {
+            max-width: min(56vw, 240px);
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+          }
+
+          .nav-right a {
+            font-size: 0.82rem !important;
+          }
+
+          .nav-right .btn-get-started {
+            padding: 8px 14px;
+          }
         }
 
         .nav-badge {
