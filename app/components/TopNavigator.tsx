@@ -31,7 +31,7 @@ export default function TopNavigator({
     <>
       <nav className="top-nav" aria-label="Main navigation">
         <Link href="/" className="top-nav-brand">
-          <img src="/orraah-logo.png" alt="Orraah" className="top-nav-logo-img" />
+          <img src="/orraah-logo.png" alt="Orraah" className="top-nav-logo-img" width="60" height="60" />
           <span className="top-nav-logo-text">Orraah</span>
         </Link>
 
