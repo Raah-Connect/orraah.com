@@ -128,7 +128,7 @@ export default function DownloadPage() {
             <img src="/windowslogo.png" alt="Windows" className="dl-card-icon" />
             <div className="dl-card-title">Windows</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/windows-x86_64/Orraah_0.1.1_x64_en-US.msi"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/windows-x86_64/Orraah_0.1.2_x64_en-US.msi"
               className="dl-btn"
             >
               ↓ Download for Windows
@@ -139,7 +139,8 @@ export default function DownloadPage() {
             <img src="/applelogo.jpeg" alt="macOS" className="dl-card-icon" />
             <div className="dl-card-title">macOS</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/darwin-aarch64/Orraah_0.1.1_aarch64.dmg"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/darwin-aarch64/Orraah_0.1.2_aarch64.dmg"
+              
               className="dl-btn"
             >
               ↓ Download for macOS
@@ -150,7 +151,7 @@ export default function DownloadPage() {
             <img src="/linuxlogo.jpeg" alt="Linux" className="dl-card-icon" />
             <div className="dl-card-title">Linux</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.1_amd64.deb"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.2_amd64.AppImage"
               className="dl-btn"
             >
               ↓ Download for Linux
