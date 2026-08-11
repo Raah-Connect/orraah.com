@@ -161,15 +161,15 @@ export default function DownloadPage() {
           <div className="dl-card">
             <img src="/linuxlogo.jpeg" alt="Linux" className="dl-card-icon" />
             <div className="dl-card-title">Linux</div>
+            <p className="dl-sub-link">
+              AppImage (experimental): <a href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.2_amd64.AppImage">direct download</a>
+            </p>
             <a
               href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.2_amd64.deb"
               className="dl-btn"
             >
               ↓ Download .deb
             </a>
-            <p className="dl-sub-link">
-              AppImage (experimental): <a href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.2_amd64.AppImage">direct download</a>
-            </p>
           </div>
         </div>
 
