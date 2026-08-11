@@ -114,6 +114,17 @@ export default function DownloadPage() {
           color: var(--gold);
           text-decoration: none;
         }
+
+        .dl-sub-link {
+          margin-top: -8px;
+          font-size: 0.8rem;
+          color: var(--text-dim);
+        }
+
+        .dl-sub-link a {
+          color: var(--gold);
+          text-decoration: none;
+        }
       `}</style>
 
       <main className="dl-main">
@@ -151,11 +162,14 @@ export default function DownloadPage() {
             <img src="/linuxlogo.jpeg" alt="Linux" className="dl-card-icon" />
             <div className="dl-card-title">Linux</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.2_amd64.AppImage"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.2_amd64.deb"
               className="dl-btn"
             >
-              ↓ Download for Linux
+              ↓ Download .deb
             </a>
+            <p className="dl-sub-link">
+              AppImage (experimental): <a href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.2_amd64.AppImage">direct download</a>
+            </p>
           </div>
         </div>
 
