@@ -1,6 +1,82 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import TopNavigator from "../components/TopNavigator";
+
+const DEFAULT_FOUNDER_LIMIT = 500;
+
+const FOUNDER_PRODUCTS = {
+  "founders-combo": {
+    delivery: "Estimated delivery: Q1 2027",
+  },
+  "p2p-commerce-app-store": {
+    delivery: "Estimated delivery: Q1 2027",
+  },
+  "remote-access-custom-subdomain": {
+    delivery: "Estimated delivery: Q4 2026",
+  },
+};
+
+type FounderProductId = keyof typeof FOUNDER_PRODUCTS;
+
+type FounderSlotProduct = {
+  id: FounderProductId;
+  sold: number | null;
+  remaining: number;
+  limit: number;
+  soldOut: boolean;
+  deliveryWindow: string;
+};
+
+type FounderSlotResponse = {
+  configured: boolean;
+  products?: FounderSlotProduct[];
+};
+
 export default function StorePage() {
+  const [slotData, setSlotData] = useState<Record<string, FounderSlotProduct>>({});
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadFounderSlots() {
+      try {
+        const response = await fetch("/api/founder-slots", { cache: "no-store" });
+        if (!response.ok) return;
+
+        const payload: FounderSlotResponse = await response.json();
+        if (!payload.products || !isActive) return;
+
+        const mapped = Object.fromEntries(payload.products.map((product) => [product.id, product]));
+        setSlotData(mapped);
+      } catch {
+        // Ignore temporary slot API errors and keep static fallback copy.
+      }
+    }
+
+    loadFounderSlots();
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  const founderNote = useMemo(
+    () => (productId: FounderProductId, fallbackText: string) => {
+      const slot = slotData[productId];
+      if (!slot) return fallbackText;
+      if (slot.soldOut) return "Founder slots sold out";
+      return `${slot.remaining}/${slot.limit} founder slots remaining`;
+    },
+    [slotData]
+  );
+
+  const founderDelivery = useMemo(
+    () => (productId: FounderProductId) => {
+      return slotData[productId]?.deliveryWindow ?? FOUNDER_PRODUCTS[productId].delivery;
+    },
+    [slotData]
+  );
 
   return (
     <>
@@ -111,6 +187,12 @@ export default function StorePage() {
         .product-price-note {
           font-size: 0.8rem;
           color: var(--text-dim);
+          margin-bottom: 8px;
+        }
+
+        .product-delivery {
+          font-size: 0.8rem;
+          color: var(--text-dim);
           margin-bottom: 20px;
         }
 
@@ -188,6 +270,9 @@ export default function StorePage() {
           <p>
             One-time purchases. No recurring subscriptions. Pick the package that fits what you want to own.
           </p>
+          <p style={{ marginTop: "12px", fontSize: "0.95rem" }}>
+            Founder pre-orders are live for select products. The first 500 customers lock in founder pricing now and receive access as soon as those products launch.
+          </p>
         </section>
 
         <section className="product-grid">
@@ -206,11 +291,13 @@ export default function StorePage() {
             <div className="product-tag">Best value</div>
             <div className="product-title">Founder Combo Kit</div>
             <div className="product-price">$175 <span>one-time</span></div>
-            <div className="product-price-note">First 500 signups</div>
+            <div className="product-price-note">{founderNote("founders-combo", "Founder pre-order • first 500 slots")}</div>
+            <div className="product-delivery">{founderDelivery("founders-combo")}</div>
             <p className="product-desc">
-              Bundle with Friends &amp; Family Hosting, Remote Access, Peer-to-Peer Commerce, and AI package.
+              Includes Friends &amp; Family Hosting, Remote Access, Peer-to-Peer Commerce, and AI package.
+              Remote Access and Commerce are delivered when those products launch.
             </p>
-            <Link href="/store/checkout/founders-combo" className="product-btn">Claim combo pricing</Link>
+            <Link href="/store/checkout/founders-combo" className="product-btn">Reserve founder pricing</Link>
           </div>
 
           <div className="product-card featured">
@@ -231,25 +318,27 @@ export default function StorePage() {
           </div>
 
           <div className="product-card">
-            <div className="product-tag">Founder package</div>
+            <div className="product-tag">Founder pre-order</div>
             <div className="product-title">Peer-to-Peer Commerce &amp; App Store</div>
             <div className="product-price">$50 <span>one-time</span></div>
-            <div className="product-price-note">First 500 signups</div>
+            <div className="product-price-note">{founderNote("p2p-commerce-app-store", "First 500 founder slots")}</div>
+            <div className="product-delivery">{founderDelivery("p2p-commerce-app-store")}</div>
             <p className="product-desc">
-              Buy, sell, and discover apps directly with other Orraah users.
+              Lock in founder pricing now. Access is granted as soon as peer-to-peer commerce goes live.
             </p>
-            <Link href="/store/checkout/p2p-commerce-app-store" className="product-btn">Claim founder pricing</Link>
+            <Link href="/store/checkout/p2p-commerce-app-store" className="product-btn">Reserve founder pricing</Link>
           </div>
 
           <div className="product-card">
-            <div className="product-tag">Founder package</div>
+            <div className="product-tag">Founder pre-order</div>
             <div className="product-title">Remote Access + Custom Subdomain</div>
             <div className="product-price">$50 <span>one-time</span></div>
-            <div className="product-price-note">First 500 signups</div>
+            <div className="product-price-note">{founderNote("remote-access-custom-subdomain", "First 500 founder slots")}</div>
+            <div className="product-delivery">{founderDelivery("remote-access-custom-subdomain")}</div>
             <p className="product-desc">
-              Access your server remotely with your own subdomain (yourname.orraah.com).
+              Reserve your founder price now and get remote access as soon as this feature launches.
             </p>
-            <Link href="/store/checkout/remote-access-custom-subdomain" className="product-btn">Claim founder pricing</Link>
+            <Link href="/store/checkout/remote-access-custom-subdomain" className="product-btn">Reserve founder pricing</Link>
           </div>
         </section>
 
