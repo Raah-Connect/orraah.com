@@ -1,5 +1,3 @@
-import { PRODUCT_CATALOG } from "@/lib/products";
-
 const FOUNDER_SLOT_LIMIT = 500;
 
 const FOUNDER_PRODUCTS = [
@@ -7,92 +5,80 @@ const FOUNDER_PRODUCTS = [
     id: "founders-combo",
     label: "Founder Combo Kit",
     deliveryWindow: "Estimated delivery: Q1 2027",
-    priceId: PRODUCT_CATALOG["founders-combo"].paddlePriceId,
   },
   {
     id: "p2p-commerce-app-store",
     label: "Peer-to-Peer Commerce & App Store",
     deliveryWindow: "Estimated delivery: Q1 2027",
-    priceId: PRODUCT_CATALOG["p2p-commerce-app-store"].paddlePriceId,
   },
   {
     id: "remote-access-custom-subdomain",
     label: "Remote Access + Custom Subdomain",
     deliveryWindow: "Estimated delivery: Q4 2026",
-    priceId: PRODUCT_CATALOG["remote-access-custom-subdomain"].paddlePriceId,
   },
 ];
 
-function extractPriceId(item) {
-  return item?.price?.id ?? item?.price_id ?? item?.priceId ?? null;
-}
+function getDropletReadUrl() {
+  if (process.env.ORDER_DB_READ_URL) {
+    return process.env.ORDER_DB_READ_URL;
+  }
 
-function extractQuantity(item) {
-  const quantity = Number(item?.quantity ?? 1);
-  return Number.isFinite(quantity) && quantity > 0 ? quantity : 1;
-}
-
-function extractLineItems(transaction) {
-  if (Array.isArray(transaction?.items)) return transaction.items;
-  if (Array.isArray(transaction?.details?.line_items)) return transaction.details.line_items;
-  if (Array.isArray(transaction?.details?.items)) return transaction.details.items;
-  return [];
-}
-
-function getNextCursor(meta) {
-  const next = meta?.pagination?.next ?? meta?.next ?? null;
-  if (!next || typeof next !== "string") return null;
+  if (!process.env.ORDER_DB_URL) {
+    return null;
+  }
 
   try {
-    const url = new URL(next);
-    return url.searchParams.get("after");
+    const parsed = new URL(process.env.ORDER_DB_URL);
+    if (parsed.pathname.endsWith("/founder-orders")) {
+      parsed.pathname = parsed.pathname.replace(/\/founder-orders$/, "/founder-orders/slots");
+    } else {
+      parsed.pathname = `${parsed.pathname.replace(/\/$/, "")}/slots`;
+    }
+    return parsed.toString();
   } catch {
     return null;
   }
 }
 
-async function fetchCompletedTransactions(apiKey) {
-  const transactions = [];
-  let after = null;
-
-  for (let page = 0; page < 25; page += 1) {
-    const url = new URL("https://api.paddle.com/transactions");
-    url.searchParams.set("status", "completed");
-    url.searchParams.set("per_page", "200");
-    if (after) {
-      url.searchParams.set("after", after);
-    }
-
-    const response = await fetch(url.toString(), {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      throw new Error(`Paddle API error: ${response.status}`);
-    }
-
-    const payload = await response.json();
-    const batch = Array.isArray(payload?.data) ? payload.data : [];
-    transactions.push(...batch);
-
-    after = getNextCursor(payload?.meta);
-    if (!after || batch.length === 0) {
-      break;
-    }
+async function fetchFounderCountsFromDroplet() {
+  const readUrl = getDropletReadUrl();
+  if (!readUrl) {
+    return { configured: false, products: [] };
   }
 
-  return transactions;
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  const authToken = process.env.ORDER_DB_TOKEN ?? process.env.FOUNDER_ORDER_DB_TOKEN;
+  if (authToken) {
+    headers.Authorization = `Bearer ${authToken}`;
+  }
+
+  const response = await fetch(readUrl, {
+    method: "GET",
+    headers,
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    const errorPayload = await response.text();
+    throw new Error(`Droplet slot API error: ${response.status} ${errorPayload.slice(0, 300)}`);
+  }
+
+  const payload = await response.json();
+  const products = Array.isArray(payload?.products) ? payload.products : [];
+  return {
+    configured: true,
+    products,
+    asOf: payload?.asOf ?? new Date().toISOString(),
+  };
 }
 
 export async function GET() {
-  const apiKey = process.env.PADDLE_API_KEY;
+  const readUrl = getDropletReadUrl();
 
-  if (!apiKey) {
+  if (!readUrl) {
     const fallback = FOUNDER_PRODUCTS.map((product) => ({
       id: product.id,
       label: product.label,
@@ -101,7 +87,7 @@ export async function GET() {
       limit: FOUNDER_SLOT_LIMIT,
       soldOut: false,
       deliveryWindow: product.deliveryWindow,
-      note: "Set PADDLE_API_KEY to enable live founder slot counts.",
+      note: "Set ORDER_DB_READ_URL (or ORDER_DB_URL) to enable droplet-backed founder slot counts.",
     }));
 
     return Response.json({
@@ -112,48 +98,52 @@ export async function GET() {
   }
 
   try {
-    const counts = Object.fromEntries(FOUNDER_PRODUCTS.map((product) => [product.id, 0]));
-    const trackedPriceToProductId = new Map(
-      FOUNDER_PRODUCTS.filter((product) => Boolean(product.priceId)).map((product) => [product.priceId, product.id])
+    const dropletData = await fetchFounderCountsFromDroplet();
+    const dropletProductsById = new Map(
+      dropletData.products
+        .filter((item) => item && typeof item.id === "string")
+        .map((item) => [item.id, item])
     );
 
-    const transactions = await fetchCompletedTransactions(apiKey);
-
-    for (const transaction of transactions) {
-      const lineItems = extractLineItems(transaction);
-      for (const item of lineItems) {
-        const priceId = extractPriceId(item);
-        const productId = trackedPriceToProductId.get(priceId);
-        if (!productId) continue;
-        counts[productId] += extractQuantity(item);
-      }
-    }
-
     const products = FOUNDER_PRODUCTS.map((product) => {
-      const sold = counts[product.id] ?? 0;
+      const fromDroplet = dropletProductsById.get(product.id);
+      const soldCandidate = Number(fromDroplet?.sold ?? fromDroplet?.count ?? 0);
+      const sold = Number.isFinite(soldCandidate) && soldCandidate >= 0 ? soldCandidate : 0;
       const remaining = Math.max(FOUNDER_SLOT_LIMIT - sold, 0);
       return {
         id: product.id,
         label: product.label,
         sold,
-        remaining,
-        limit: FOUNDER_SLOT_LIMIT,
-        soldOut: remaining === 0,
-        deliveryWindow: product.deliveryWindow,
+        remaining: Number.isFinite(Number(fromDroplet?.remaining))
+          ? Math.max(Number(fromDroplet.remaining), 0)
+          : remaining,
+        limit: Number.isFinite(Number(fromDroplet?.limit))
+          ? Number(fromDroplet.limit)
+          : FOUNDER_SLOT_LIMIT,
+        soldOut: typeof fromDroplet?.soldOut === "boolean" ? fromDroplet.soldOut : remaining === 0,
+        deliveryWindow: fromDroplet?.deliveryWindow ?? product.deliveryWindow,
       };
     });
 
     return Response.json({
       configured: true,
       products,
-      asOf: new Date().toISOString(),
+      asOf: dropletData.asOf ?? new Date().toISOString(),
     });
   } catch (error) {
     console.error("Founder slot count error:", error);
+    const message = error instanceof Error ? error.message : "Unknown error";
+    const lowered = message.toLowerCase();
+
+    let clientError = "Unable to fetch founder slot counts from droplet right now.";
+    if (lowered.includes("401") || lowered.includes("403") || lowered.includes("unauthorized") || lowered.includes("forbidden")) {
+      clientError = "Droplet slot endpoint rejected authentication. Verify ORDER_DB_TOKEN matches the droplet API.";
+    }
+
     return Response.json(
       {
         configured: true,
-        error: "Unable to fetch founder slot counts right now.",
+        error: clientError,
         asOf: new Date().toISOString(),
       },
       { status: 502 }

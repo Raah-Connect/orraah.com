@@ -95,6 +95,78 @@ function extractQuantity(item) {
   return Number.isFinite(quantity) && quantity > 0 ? quantity : 1;
 }
 
+function getMoneyAmount(value) {
+  if (value == null) return null;
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string") {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  if (typeof value === "object") {
+    const amount = value?.amount ?? value?.value;
+    if (amount == null) return null;
+    const parsed = Number(amount);
+    return Number.isFinite(parsed) ? parsed : null;
+  }
+  return null;
+}
+
+function buildFounderOrderPayload(event, eventData, founderPurchases, customerEmail) {
+  const totals = eventData?.details?.totals ?? eventData?.totals ?? {};
+
+  return {
+    source: "paddle",
+    eventId: event?.event_id ?? event?.notification_id ?? null,
+    eventType: event?.event_type ?? null,
+    occurredAt: event?.occurred_at ?? new Date().toISOString(),
+    transactionId: eventData?.id ?? null,
+    transactionStatus: eventData?.status ?? null,
+    customerId: eventData?.customer_id ?? eventData?.customer?.id ?? null,
+    customerEmail,
+    currencyCode: eventData?.currency_code ?? totals?.currency_code ?? null,
+    amountSubtotal: getMoneyAmount(totals?.subtotal),
+    amountTax: getMoneyAmount(totals?.tax),
+    amountTotal: getMoneyAmount(totals?.total),
+    purchases: founderPurchases.map(({ product, quantity }) => ({
+      productId: product.id,
+      productName: product.name,
+      paddlePriceId: product.priceId,
+      quantity,
+      deliveryWindow: product.deliveryWindow,
+    })),
+  };
+}
+
+async function persistFounderOrderToDroplet(payload) {
+  const endpoint = process.env.ORDER_DB_URL ?? process.env.FOUNDER_ORDER_DB_URL;
+  if (!endpoint) {
+    return { configured: false, persisted: false };
+  }
+
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  const authToken = process.env.ORDER_DB_TOKEN ?? process.env.FOUNDER_ORDER_DB_TOKEN;
+  if (authToken) {
+    headers.Authorization = `Bearer ${authToken}`;
+  }
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload),
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Founder order persistence failed (${response.status}): ${errorText.slice(0, 300)}`);
+  }
+
+  return { configured: true, persisted: true };
+}
+
 export async function POST(request) {
   if (!process.env.RESEND_API_KEY) {
     return Response.json({ error: "Email service not configured" }, { status: 500 });
@@ -157,6 +229,16 @@ export async function POST(request) {
     return Response.json({ error: "Customer email not found" }, { status: 422 });
   }
 
+  const founderOrderPayload = buildFounderOrderPayload(event, eventData, founderPurchases, customerEmail);
+
+  try {
+    await persistFounderOrderToDroplet(founderOrderPayload);
+  } catch (error) {
+    console.error("Founder order persistence error:", error);
+    // Return non-2xx so Paddle retries this webhook and we do not lose order data.
+    return Response.json({ error: "Unable to persist founder order" }, { status: 502 });
+  }
+
   const resend = new Resend(process.env.RESEND_API_KEY);
 
   const productListHtml = founderPurchases
@@ -185,5 +267,9 @@ export async function POST(request) {
     `,
   });
 
-  return Response.json({ received: true, emailed: true });
+  return Response.json({
+    received: true,
+    emailed: true,
+    persisted: Boolean(process.env.ORDER_DB_URL ?? process.env.FOUNDER_ORDER_DB_URL),
+  });
 }
