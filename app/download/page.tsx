@@ -147,7 +147,7 @@ export default function DownloadPage() {
         <TopNavigator />
         <h1 className="dl-title">Download Orraah</h1>
         <p className="dl-sub">
-          Version 0.1.5 — Available for Windows, macOS, and Linux.
+          Version 0.1.6 — Available for Windows, macOS, and Linux.
         </p>
 
         <div className="dl-grid">
@@ -155,7 +155,7 @@ export default function DownloadPage() {
             <img src="/windowslogo.png" alt="Windows" className="dl-card-icon" />
             <div className="dl-card-title">Windows</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/windows-x86_64/Orraah_0.1.5_x64_en-US.msi"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/windows-x86_64/Orraah_0.1.6_x64_en-US.msi"
               className="dl-btn"
             >
               ↓ Download for Windows
@@ -166,7 +166,7 @@ export default function DownloadPage() {
             <img src="/applelogo.jpeg" alt="macOS" className="dl-card-icon" />
             <div className="dl-card-title">macOS</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/darwin-aarch64/Orraah_0.1.5_aarch64.dmg"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/darwin-aarch64/Orraah_0.1.6_aarch64.dmg"
               
               className="dl-btn"
             >
@@ -177,18 +177,21 @@ export default function DownloadPage() {
           <div className="dl-card">
             <img src="/linuxlogo.jpeg" alt="Linux" className="dl-card-icon" />
             <div className="dl-card-title">Linux</div>
-            <p className="dl-sub-link">
-              AppImage (experimental): <a href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.5_amd64.AppImage">direct download</a>
-            </p>
             <div className="dl-actions">
               <a
-                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.5_amd64.deb"
+                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.6_amd64.AppImage"
+                className="dl-btn dl-btn-small"
+              >
+                ↓ Download .appimage
+              </a>
+              <a
+                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.6_amd64.deb"
                 className="dl-btn dl-btn-small"
               >
                 ↓ Download .deb
               </a>
               <a
-                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah-0.1.5-1.x86_64.rpm"
+                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah-0.1.6-1.x86_64.rpm"
                 className="dl-btn dl-btn-small"
               >
                 ↓ Download .rpm
