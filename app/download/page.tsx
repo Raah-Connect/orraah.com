@@ -155,7 +155,7 @@ export default function DownloadPage() {
             <img src="/windowslogo.png" alt="Windows" className="dl-card-icon" />
             <div className="dl-card-title">Windows</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/windows-x86_64/Orraah_0.1.6_x64_en-US.msi"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/windows-x86_64/Orraah_0.1.7_x64_en-US.msi"
               className="dl-btn"
             >
               ↓ Download for Windows
@@ -179,19 +179,19 @@ export default function DownloadPage() {
             <div className="dl-card-title">Linux</div>
             <div className="dl-actions">
               <a
-                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.6_amd64.AppImage"
+                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.7_amd64.AppImage"
                 className="dl-btn dl-btn-small"
               >
                 ↓ Download .appimage
               </a>
               <a
-                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.6_amd64.deb"
+                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.7_amd64.deb"
                 className="dl-btn dl-btn-small"
               >
                 ↓ Download .deb
               </a>
               <a
-                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah-0.1.6-1.x86_64.rpm"
+                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah-0.1.7-1.x86_64.rpm"
                 className="dl-btn dl-btn-small"
               >
                 ↓ Download .rpm
