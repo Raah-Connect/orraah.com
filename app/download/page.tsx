@@ -147,7 +147,7 @@ export default function DownloadPage() {
         <TopNavigator />
         <h1 className="dl-title">Download Orraah</h1>
         <p className="dl-sub">
-          Version 0.1.6 — Available for Windows, macOS, and Linux.
+          Version 0.1.8 — Available for Windows, macOS, and Linux.
         </p>
 
         <div className="dl-grid">
