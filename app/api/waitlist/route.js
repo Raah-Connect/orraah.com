@@ -23,12 +23,41 @@ function isCoolingDown(ip) {
   return Date.now() - previous < COOLDOWN_MS;
 }
 
+async function syncContactToAudience(email, resendApiKey) {
+  const audienceId = process.env.RESEND_AUDIENCE_ID;
+  if (!audienceId) return;
+
+  const response = await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${resendApiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+      unsubscribed: false,
+    }),
+    cache: 'no-store',
+  });
+
+  // Contact already exists in this audience.
+  if (response.status === 409) {
+    return;
+  }
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Audience sync failed (${response.status}): ${errorText.slice(0, 300)}`);
+  }
+}
+
 export async function POST(request) {
-  if (!process.env.RESEND_API_KEY) {
+  const resendApiKey = process.env.RESEND_API_KEY;
+  if (!resendApiKey) {
     return Response.json({ error: 'Email service not configured' }, { status: 500 });
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  const resend = new Resend(resendApiKey);
 
   try {
     const clientIp = getClientIp(request);
@@ -48,6 +77,8 @@ export async function POST(request) {
         { status: 400 }
       );
     }
+
+    await syncContactToAudience(normalizedEmail, resendApiKey);
 
     await resend.emails.send({
       from: 'Orraah <updates@orraah.com>',
