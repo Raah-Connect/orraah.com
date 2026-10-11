@@ -4,8 +4,6 @@ import Link from "next/link";
 import TopNavigator from "./components/TopNavigator";
 
 export default function Home() {
-
-
   return (
     <>
       <style>{`
@@ -160,104 +158,6 @@ export default function Home() {
           max-width: 900px;
           margin-bottom: 52px;
           font-weight: 300;
-        }
-
-        /* WAITLIST */
-        .waitlist-box {
-          background: var(--surface);
-          border: 1px solid var(--border);
-          border-radius: 16px;
-          padding: 40px;
-          margin-bottom: 28px;
-          position: relative;
-          overflow: hidden;
-          box-shadow: 0 2px 16px rgba(26,111,232,0.06);
-        }
-
-        .waitlist-box::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 2px;
-          background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        }
-
-        .waitlist-label {
-          font-family: 'DM Mono', monospace;
-          font-size: 0.72rem;
-          color: var(--gold);
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          margin-bottom: 12px;
-        }
-
-        .waitlist-title {
-          font-family: 'Syne', sans-serif;
-          font-size: 1.4rem;
-          font-weight: 700;
-          margin-bottom: 8px;
-        }
-
-        .waitlist-desc {
-          font-size: 0.9rem;
-          color: var(--text-dim);
-          margin-bottom: 24px;
-          line-height: 1.6;
-        }
-
-        .input-row {
-          display: flex;
-          gap: 12px;
-          flex-wrap: wrap;
-        }
-
-        input[type="email"],
-        input[type="text"] {
-          flex: 1;
-          min-width: 220px;
-          background: var(--bg);
-          border: 1px solid var(--border);
-          color: var(--text);
-          padding: 14px 18px;
-          border-radius: 10px;
-          font-family: 'DM Sans', sans-serif;
-          font-size: 0.95rem;
-          outline: none;
-          transition: border-color 0.2s;
-        }
-
-        input:focus { border-color: var(--gold); }
-        input::placeholder { color: var(--text-dim); }
-
-        .btn-gold {
-          background: var(--gold);
-          color: #ffffff;
-          border: none;
-          padding: 14px 28px;
-          border-radius: 10px;
-          font-family: 'Syne', sans-serif;
-          font-weight: 700;
-          font-size: 0.95rem;
-          cursor: pointer;
-          transition: all 0.2s;
-          white-space: nowrap;
-          letter-spacing: 0.01em;
-        }
-
-        .btn-gold:hover {
-          background: var(--gold-dim);
-          transform: translateY(-1px);
-          box-shadow: 0 8px 24px rgba(26,111,232,0.2);
-        }
-
-        .success-msg {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          color: var(--green);
-          font-family: 'DM Mono', monospace;
-          font-size: 0.9rem;
-          padding: 14px 0;
         }
 
         /* EARLY ADOPTER */

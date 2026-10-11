@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 import TopNavigator from "../components/TopNavigator";
 
 const DEFAULT_FOUNDER_LIMIT = 500;
@@ -36,6 +36,43 @@ type FounderSlotResponse = {
 
 export default function StorePage() {
   const [slotData, setSlotData] = useState<Record<string, FounderSlotProduct>>({});
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function handleWaitlistSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (loading || success) return;
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const payload = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        const apiError = typeof payload?.error === "string" ? payload.error : null;
+        setError(apiError ?? "Something went wrong. Please try again.");
+        return;
+      }
+
+      setSuccess(true);
+      setEmail("");
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     let isActive = true;
@@ -107,24 +144,114 @@ export default function StorePage() {
           padding: 0 24px;
         }
 
-        .store-hero {
-          padding: 80px 0 30px;
-          max-width: 760px;
+        .waitlist-box {
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 16px;
+          padding: 28px;
+          width: 100%;
+          min-width: 0;
+          max-width: none;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 2px 16px rgba(26,111,232,0.06);
+          height: 100%;
         }
 
-        .store-hero h1 {
+        .waitlist-box::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .waitlist-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 0.72rem;
+          color: var(--gold);
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          margin-bottom: 10px;
+        }
+
+        .waitlist-title {
           font-family: 'Syne', sans-serif;
-          font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+          font-size: 1.2rem;
           font-weight: 700;
-          line-height: 1.25;
-          letter-spacing: -0.02em;
-          margin-bottom: 16px;
+          margin-bottom: 8px;
         }
 
-        .store-hero p {
-          font-size: 1.02rem;
+        .waitlist-desc {
+          font-size: 0.9rem;
           color: var(--text-dim);
-          line-height: 1.7;
+          margin-bottom: 18px;
+          line-height: 1.6;
+        }
+
+        .waitlist-row {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+        }
+
+        .waitlist-input {
+          flex: 1;
+          min-width: 220px;
+          background: var(--bg);
+          border: 1px solid var(--border);
+          color: var(--text);
+          padding: 12px 14px;
+          border-radius: 10px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.95rem;
+          outline: none;
+          transition: border-color 0.2s;
+        }
+
+        .waitlist-input:focus {
+          border-color: var(--gold);
+        }
+
+        .waitlist-input::placeholder {
+          color: var(--text-dim);
+        }
+
+        .waitlist-btn {
+          background: var(--gold);
+          color: #ffffff;
+          border: none;
+          padding: 12px 20px;
+          border-radius: 10px;
+          font-family: 'Syne', sans-serif;
+          font-weight: 700;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: all 0.2s;
+          white-space: nowrap;
+        }
+
+        .waitlist-btn:hover {
+          background: var(--gold-dim);
+        }
+
+        .waitlist-btn:disabled {
+          opacity: 0.65;
+          cursor: not-allowed;
+        }
+
+        .waitlist-success {
+          color: #16a34a;
+          font-family: 'DM Mono', monospace;
+          font-size: 0.9rem;
+        }
+
+        .waitlist-error {
+          color: #b91c1c;
+          font-size: 0.9rem;
+          margin-top: 12px;
         }
 
         .product-grid {
@@ -265,16 +392,6 @@ export default function StorePage() {
       <main className="store-main">
         <TopNavigator />
 
-        <section className="store-hero">
-          <h1>Own your identity. Own your server.</h1>
-          <p>
-            One-time purchases. No recurring subscriptions. Pick the package that fits what you want to own.
-          </p>
-          <p style={{ marginTop: "12px", fontSize: "0.95rem" }}>
-            Founder pre-orders are live for select products. The first 500 customers lock in founder pricing now and receive access as soon as those products launch.
-          </p>
-        </section>
-
         <section className="product-grid">
           <div className="product-card">
             <div className="product-tag">Start here</div>
@@ -339,6 +456,39 @@ export default function StorePage() {
               Reserve your founder price now and get remote access as soon as this feature launches.
             </p>
             <Link href="/store/checkout/remote-access-custom-subdomain" className="product-btn">Reserve founder pricing</Link>
+          </div>
+
+          <div className="product-card">
+            <div className="waitlist-box">
+              <div className="waitlist-label">Waitlist</div>
+              <div className="waitlist-title">Get launch updates first</div>
+              <p className="waitlist-desc">
+                Join the waitlist and we will email when development products launch.
+              </p>
+
+              {success ? (
+                <div className="waitlist-success">✓ You&rsquo;re on the list! We&rsquo;ll be in touch soon.</div>
+              ) : (
+                <form onSubmit={handleWaitlistSubmit}>
+                  <div className="waitlist-row">
+                    <input
+                      className="waitlist-input"
+                      type="email"
+                      value={email}
+                      onChange={(event) => setEmail(event.target.value)}
+                      placeholder="you@example.com"
+                      autoComplete="email"
+                      disabled={loading}
+                      aria-label="Email"
+                    />
+                    <button type="submit" className="waitlist-btn" disabled={loading}>
+                      {loading ? "Joining..." : "Join Waitlist"}
+                    </button>
+                  </div>
+                  {error ? <p className="waitlist-error">{error}</p> : null}
+                </form>
+              )}
+            </div>
           </div>
         </section>
 
