@@ -1,14 +1,57 @@
 import Link from "next/link";
+import { PRODUCT_CATALOG, type ProductId } from "@/lib/products";
 
-export default function WelcomePage() {
+const PRODUCT_WELCOME_COPY: Partial<Record<ProductId, { title: string; body: string }>> = {
+  "founders-combo": {
+    title: "Founder access reserved",
+    body: "Your Founder Combo spot is secured. We will send rollout updates for hosting, remote access, commerce, and AI as each part goes live.",
+  },
+  "planet-identity": {
+    title: "Planet identity secured",
+    body: "Your order is complete. We will follow up with identity provisioning details so you can claim your Urbit planet.",
+  },
+  "friends-family-hosting": {
+    title: "Hosting spot secured",
+    body: "Your Friends and Family Hosting spot is secured. We will send rollout updates as hosting goes live."
+  },
+  "remote-access-custom-subdomain": {
+    title: "Remote access reserved",
+    body: "Your Remote Access and Custom Subdomain spot is secured.  We will send rollout updates as remote access goes live.",
+  },
+  "p2p-commerce-app-store": {
+    title: "Commerce access reserved",
+    body: "Your Peer-to-Peer Commerce and App Store spot is secured.  We will send rollout updates as the peer-to-peer commerce and app store goes live.",
+  },
+  "ai-package": {
+    title: "AI package confirmed",
+    body: "Your AI Package checkout is spot is secured.  We will send rollout updates as the AI package goes live.",
+  },
+};
+
+function isProductId(value: string): value is ProductId {
+  return value in PRODUCT_CATALOG;
+}
+
+export default function WelcomePage({
+  searchParams,
+}: {
+  searchParams?: { product?: string };
+}) {
+  const productParam = searchParams?.product;
+  const productId = productParam && isProductId(productParam) ? productParam : null;
+  const product = productId ? PRODUCT_CATALOG[productId] : null;
+
+  const title = productId ? (PRODUCT_WELCOME_COPY[productId]?.title ?? `${product?.name} confirmed`) : "Welcome to Orraah";
+  const body = productId
+    ? (PRODUCT_WELCOME_COPY[productId]?.body ?? `Your checkout for ${product?.name ?? "your product"} is complete.`)
+    : "Your checkout is complete. You can now continue to your dashboard and start using your plan.";
+
   return (
     <main style={styles.main}>
       <section style={styles.card}>
         <p style={styles.kicker}>Subscription active</p>
-        <h1 style={styles.title}>Welcome to Orraah</h1>
-        <p style={styles.text}>
-          Your checkout is complete. You can now continue to your dashboard and start using your plan.
-        </p>
+        <h1 style={styles.title}>{title}</h1>
+        <p style={styles.text}>{body}</p>
         <Link href="/" style={styles.link}>
           Go to home
         </Link>

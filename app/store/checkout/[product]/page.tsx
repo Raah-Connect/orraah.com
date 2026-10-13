@@ -109,7 +109,7 @@ export default function ProductCheckoutPage() {
         settings: {
           displayMode: "overlay",
           variant: "one-page",
-          successUrl: `${window.location.origin}/welcome`,
+          successUrl: `${window.location.origin}/welcome?product=${encodeURIComponent(product.id)}`,
         },
       });
     } catch (checkoutError) {
