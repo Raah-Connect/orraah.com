@@ -202,10 +202,6 @@ async function persistFounderOrderToDroplet(payload) {
 }
 
 export async function POST(request) {
-  if (!process.env.RESEND_API_KEY) {
-    return Response.json({ error: "Email service not configured" }, { status: 500 });
-  }
-
   const webhookSecret = process.env.PADDLE_WEBHOOK_SECRET;
   if (!webhookSecret) {
     return Response.json({ error: "Webhook secret not configured" }, { status: 500 });
@@ -273,37 +269,41 @@ export async function POST(request) {
     return Response.json({ error: "Unable to persist founder order" }, { status: 502 });
   }
 
-  const resend = new Resend(process.env.RESEND_API_KEY);
+  let emailed = false;
+  if (process.env.RESEND_API_KEY) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-  const productListHtml = founderPurchases
-    .map(({ product, quantity }) => {
-      const quantityText = quantity > 1 ? ` (x${quantity})` : "";
-      return `<li><strong>${product.name}</strong>${quantityText}<br/><span style="color:#4a5568;">${product.deliveryWindow}</span></li>`;
-    })
-    .join("");
+    const productListHtml = founderPurchases
+      .map(({ product, quantity }) => {
+        const quantityText = quantity > 1 ? ` (x${quantity})` : "";
+        return `<li><strong>${product.name}</strong>${quantityText}<br/><span style="color:#4a5568;">${product.deliveryWindow}</span></li>`;
+      })
+      .join("");
 
-  await resend.emails.send({
-    from: "Orraah <updates@orraah.com>",
-    to: [customerEmail],
-    subject: "Orraah founder pricing secured",
-    html: `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2>Your founder pricing is confirmed.</h2>
-        <p>Thanks for supporting Orraah early. We have received your payment and reserved your founder spot.</p>
-        <p>Purchased founder pre-orders:</p>
-        <ul>
-          ${productListHtml}
-        </ul>
-        <p>We will email onboarding details as each product reaches launch readiness.</p>
-        <p style="color: #666; font-size: 14px;">Founder pricing applies to the first ${FOUNDER_SLOT_LIMIT} customers per product.</p>
-        <p style="color: #666; font-size: 14px;">- The Orraah Team</p>
-      </div>
-    `,
-  });
+    await resend.emails.send({
+      from: "Orraah <updates@orraah.com>",
+      to: [customerEmail],
+      subject: "Orraah founder pricing secured",
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2>Your founder pricing is confirmed.</h2>
+          <p>Thanks for supporting Orraah early. We have received your payment and reserved your founder spot.</p>
+          <p>Purchased founder pre-orders:</p>
+          <ul>
+            ${productListHtml}
+          </ul>
+          <p>We will email onboarding details as each product reaches launch readiness.</p>
+          <p style="color: #666; font-size: 14px;">Founder pricing applies to the first ${FOUNDER_SLOT_LIMIT} customers per product.</p>
+          <p style="color: #666; font-size: 14px;">- The Orraah Team</p>
+        </div>
+      `,
+    });
+    emailed = true;
+  }
 
   return Response.json({
     received: true,
-    emailed: true,
+    emailed,
     persisted: Boolean(process.env.ORDER_DB_URL ?? process.env.FOUNDER_ORDER_DB_URL),
   });
 }
