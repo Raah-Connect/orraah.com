@@ -112,11 +112,8 @@ function getFulfillmentMode(customData, fallbackProductId) {
   }
 
   const productId = typeof customData?.productId === "string" ? customData.productId : fallbackProductId;
-  if (
-    productId === "founders-combo" ||
-    productId === "remote-access-custom-subdomain" ||
-    productId === "p2p-commerce-app-store"
-  ) {
+  const isReservationProduct = FOUNDER_PRODUCTS.some((product) => product.id === productId);
+  if (isReservationProduct) {
     return "reservation";
   }
 

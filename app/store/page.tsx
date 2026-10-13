@@ -405,13 +405,13 @@ export default function StorePage() {
           </div>
 
           <div className="product-card featured">
-            <div className="product-tag">Best value</div>
+            <div className="product-tag">Founder pre-order • Best value</div>
             <div className="product-title">Founder Combo Kit</div>
-            <div className="product-price">$175 <span>one-time</span></div>
-            <div className="product-price-note">{founderNote("founders-combo", "Founder pre-order • first 500 slots")}</div>
+            <div className="product-price">$175 <span>pre-order</span></div>
+            <div className="product-price-note">{founderNote("founders-combo", "Founder reservation • first 500 slots")}</div>
             <div className="product-delivery">{founderDelivery("founders-combo")}</div>
             <p className="product-desc">
-              Includes Friends &amp; Family Hosting, Remote Access, Peer-to-Peer Commerce, and AI package.
+              Reserve founder pricing for Friends &amp; Family Hosting, Remote Access, Peer-to-Peer Commerce, and AI package.
               Remote Access and Commerce are delivered when those products launch.
             </p>
             <Link href="/store/checkout/founders-combo" className="product-btn">Reserve founder pricing</Link>
@@ -435,25 +435,25 @@ export default function StorePage() {
           </div>
 
           <div className="product-card">
-            <div className="product-tag">Founder pre-order</div>
+            <div className="product-tag">Founder reservation</div>
             <div className="product-title">Peer-to-Peer Commerce &amp; App Store</div>
-            <div className="product-price">$50 <span>one-time</span></div>
-            <div className="product-price-note">{founderNote("p2p-commerce-app-store", "First 500 founder slots")}</div>
+            <div className="product-price">$50 <span>pre-order</span></div>
+            <div className="product-price-note">{founderNote("p2p-commerce-app-store", "Founder reservation • first 500 slots")}</div>
             <div className="product-delivery">{founderDelivery("p2p-commerce-app-store")}</div>
             <p className="product-desc">
-              Lock in founder pricing now. Access is granted as soon as peer-to-peer commerce goes live.
+              Founder reservation pricing. Access is granted as soon as peer-to-peer commerce goes live.
             </p>
             <Link href="/store/checkout/p2p-commerce-app-store" className="product-btn">Reserve founder pricing</Link>
           </div>
 
           <div className="product-card">
-            <div className="product-tag">Founder pre-order</div>
+            <div className="product-tag">Founder reservation</div>
             <div className="product-title">Remote Access + Custom Subdomain</div>
-            <div className="product-price">$50 <span>one-time</span></div>
-            <div className="product-price-note">{founderNote("remote-access-custom-subdomain", "First 500 founder slots")}</div>
+            <div className="product-price">$50 <span>pre-order</span></div>
+            <div className="product-price-note">{founderNote("remote-access-custom-subdomain", "Founder reservation • first 500 slots")}</div>
             <div className="product-delivery">{founderDelivery("remote-access-custom-subdomain")}</div>
             <p className="product-desc">
-              Reserve your founder price now and get remote access as soon as this feature launches.
+              Founder reservation pricing. Get remote access as soon as this feature launches.
             </p>
             <Link href="/store/checkout/remote-access-custom-subdomain" className="product-btn">Reserve founder pricing</Link>
           </div>

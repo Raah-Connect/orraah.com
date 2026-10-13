@@ -16,6 +16,8 @@ const RESERVATION_PRODUCT_IDS = new Set<ProductId>([
   "p2p-commerce-app-store",
 ]);
 
+const UNAVAILABLE_PRODUCT_IDS = new Set<ProductId>(["friends-family-hosting", "ai-package"]);
+
 function getPaddleEnvironment(): PaddleEnv {
   const env = PADDLE_ENVIRONMENT;
   if (!env) {
@@ -52,6 +54,10 @@ export default function ProductCheckoutPage() {
 
   async function handleCheckout() {
     if (!product) return;
+    if (UNAVAILABLE_PRODUCT_IDS.has(product.id)) {
+      setError("This product is not available for purchase yet.");
+      return;
+    }
     setLoading(true);
     setError(null);
 
@@ -142,12 +148,20 @@ export default function ProductCheckoutPage() {
         <h1 style={styles.title}>{product.name}</h1>
         <p style={styles.price}>{product.priceLabel}</p>
         <p style={styles.text}>{product.description}</p>
-        <p style={styles.note}>A secure Paddle one-page overlay will open to complete payment.</p>
+        <p style={styles.note}>
+          {UNAVAILABLE_PRODUCT_IDS.has(product.id)
+            ? "This product is coming soon and is not available for checkout yet."
+            : "A secure Paddle one-page overlay will open to complete payment."}
+        </p>
 
         {error && <p style={styles.error}>{error}</p>}
 
         <div style={styles.actions}>
-          <button onClick={handleCheckout} style={styles.primaryBtn} disabled={loading}>
+          <button
+            onClick={handleCheckout}
+            style={styles.primaryBtn}
+            disabled={loading || UNAVAILABLE_PRODUCT_IDS.has(product.id)}
+          >
             {loading ? "Starting checkout..." : "Continue to checkout"}
           </button>
           <Link href="/store" style={styles.secondaryBtn}>Back to store</Link>
