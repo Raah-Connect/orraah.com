@@ -1,4 +1,8 @@
+"use client";
+
 import Link from "next/link";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { PRODUCT_CATALOG, type ProductId } from "@/lib/products";
 
 const PRODUCT_WELCOME_COPY: Partial<Record<ProductId, { title: string; body: string }>> = {
@@ -33,11 +37,18 @@ function isProductId(value: string): value is ProductId {
 }
 
 export default function WelcomePage({
-  searchParams,
 }: {
-  searchParams?: { product?: string };
 }) {
-  const productParam = searchParams?.product;
+  return (
+    <Suspense fallback={<WelcomeCard title="Welcome to Orraah" body="Your checkout is complete. You can now continue to your dashboard and start using your plan." />}>
+      <WelcomePageContent />
+    </Suspense>
+  );
+}
+
+function WelcomePageContent() {
+  const searchParams = useSearchParams();
+  const productParam = searchParams.get("product");
   const productId = productParam && isProductId(productParam) ? productParam : null;
   const product = productId ? PRODUCT_CATALOG[productId] : null;
 
@@ -46,6 +57,16 @@ export default function WelcomePage({
     ? (PRODUCT_WELCOME_COPY[productId]?.body ?? `Your checkout for ${product?.name ?? "your product"} is complete.`)
     : "Your checkout is complete. You can now continue to your dashboard and start using your plan.";
 
+  return <WelcomeCard title={title} body={body} />;
+}
+
+function WelcomeCard({
+  title,
+  body,
+}: {
+  title: string;
+  body: string;
+}) {
   return (
     <main style={styles.main}>
       <section style={styles.card}>
