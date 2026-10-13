@@ -95,6 +95,34 @@ function extractQuantity(item) {
   return Number.isFinite(quantity) && quantity > 0 ? quantity : 1;
 }
 
+function extractCustomData(eventData) {
+  if (eventData?.custom_data && typeof eventData.custom_data === "object") {
+    return eventData.custom_data;
+  }
+  if (eventData?.customData && typeof eventData.customData === "object") {
+    return eventData.customData;
+  }
+  return {};
+}
+
+function getFulfillmentMode(customData, fallbackProductId) {
+  const mode = typeof customData?.fulfillmentMode === "string" ? customData.fulfillmentMode : null;
+  if (mode === "reservation" || mode === "immediate") {
+    return mode;
+  }
+
+  const productId = typeof customData?.productId === "string" ? customData.productId : fallbackProductId;
+  if (
+    productId === "founders-combo" ||
+    productId === "remote-access-custom-subdomain" ||
+    productId === "p2p-commerce-app-store"
+  ) {
+    return "reservation";
+  }
+
+  return "immediate";
+}
+
 function getMoneyAmount(value) {
   if (value == null) return null;
   if (typeof value === "number" && Number.isFinite(value)) return value;
@@ -113,6 +141,9 @@ function getMoneyAmount(value) {
 
 function buildFounderOrderPayload(event, eventData, founderPurchases, customerEmail) {
   const totals = eventData?.details?.totals ?? eventData?.totals ?? {};
+  const customData = extractCustomData(eventData);
+  const fallbackProductId = founderPurchases[0]?.product?.id ?? null;
+  const fulfillmentMode = getFulfillmentMode(customData, fallbackProductId);
 
   return {
     source: "paddle",
@@ -127,12 +158,18 @@ function buildFounderOrderPayload(event, eventData, founderPurchases, customerEm
     amountSubtotal: getMoneyAmount(totals?.subtotal),
     amountTax: getMoneyAmount(totals?.tax),
     amountTotal: getMoneyAmount(totals?.total),
+    checkoutCustomData: customData,
+    fulfillmentMode,
     purchases: founderPurchases.map(({ product, quantity }) => ({
       productId: product.id,
       productName: product.name,
       paddlePriceId: product.priceId,
       quantity,
       deliveryWindow: product.deliveryWindow,
+      fulfillmentStatus: fulfillmentMode === "reservation" ? "waitlisted" : "active",
+      invitedAt: null,
+      activatedAt: null,
+      launchEmailSentAt: null,
     })),
   };
 }

@@ -81,13 +81,13 @@ export async function POST(request) {
     await syncContactToAudience(normalizedEmail, resendApiKey);
 
     await resend.emails.send({
-      from: 'Orraah <updates@orraah.com>',
+      from: 'Orraah <support@raahconnect.com>',
       to: [normalizedEmail],
       subject: 'Thanks for joining the waitlist!',
       html: `
         <div style="font-family: sans-serif; max-width: 500px;">
           <h2>Thanks for joining the waitlist!</h2>
-          <p>We'll notify you the moment Orraah launches.</p>
+          <p>We'll notify you when Orraah Remote Access, P2P Commerce and AI features are available.</p>
           <p>In the meantime, join our community:</p>
           <ul>
             <li><a href="https://discord.gg/GDarZR92K">Discord</a></li>

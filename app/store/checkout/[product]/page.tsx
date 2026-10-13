@@ -10,6 +10,11 @@ type PaddleEnv = "sandbox" | "production";
 
 const PADDLE_ENVIRONMENT = process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT;
 const PADDLE_CLIENT_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
+const RESERVATION_PRODUCT_IDS = new Set<ProductId>([
+  "founders-combo",
+  "remote-access-custom-subdomain",
+  "p2p-commerce-app-store",
+]);
 
 function getPaddleEnvironment(): PaddleEnv {
   const env = PADDLE_ENVIRONMENT;
@@ -96,6 +101,11 @@ export default function ProductCheckoutPage() {
 
       paddle.Checkout.open({
         items: [{ priceId: product.paddlePriceId, quantity: 1 }],
+        customData: {
+          productId: product.id,
+          fulfillmentMode: RESERVATION_PRODUCT_IDS.has(product.id) ? "reservation" : "immediate",
+          checkoutSource: "store-checkout",
+        },
         settings: {
           displayMode: "overlay",
           variant: "one-page",
