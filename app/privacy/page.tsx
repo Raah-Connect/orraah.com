@@ -37,7 +37,7 @@ export default function PrivacyPolicy() {
       <p>You can request access, correction, or deletion of your data at any time by contacting us.</p>
 
       <h2>7. Contact</h2>
-      <p>Email: support@orraah.com</p>
+      <p>Email: support@raahconnect.com</p>
 
       <h2>8. Changes</h2>
       <p>We may update this policy as the product evolves. Continued use means you accept the updated policy.</p>

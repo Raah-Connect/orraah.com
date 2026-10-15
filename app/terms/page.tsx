@@ -16,7 +16,7 @@ export default function TermsOfService() {
 
       <h2>3. Refund Policy</h2>
       <p>
-        Refund requests can be made within 30 days of purchase. Contact support@orraah.com with your order ID. For full terms,
+        Refund requests can be made within 30 days of purchase. Contact support@raahconnect.com with your order ID. For full terms,
         see our <Link href="/refund-policy">Refund Policy</Link>.
       </p>
 
@@ -33,7 +33,7 @@ export default function TermsOfService() {
       <p>We may update these terms as the product evolves. Continued use means you accept the updated terms.</p>
 
       <h2>8. Contact</h2>
-      <p>Email: support@orraah.com</p>
+      <p>Email: support@raahconnect.com</p>
     </LegalPage>
   );
 }
