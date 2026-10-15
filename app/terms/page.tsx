@@ -4,15 +4,15 @@ import Link from 'next/link';
 export default function TermsOfService() {
   return (
     <LegalPage title="Terms of Service">
-      <p className="legal-date">Effective Date: January 1, 2026</p>
+      <p className="legal-date">Effective Date: October 15, 2026</p>
 
       <p>By using Orraah, you agree to these terms. Please read them carefully.</p>
 
       <h2>1. Prelaunch Disclaimer</h2>
       <p>This is a pre-launch product. Features and timelines may change as development progresses.</p>
 
-      <h2>2. Payment &amp; Lifetime Access</h2>
-      <p>Founders who pay $49 receive lifetime access to Orraah, including all future updates. The launch price will be $149.</p>
+      <h2>2. Payments</h2>
+      <p>Paid products and pre-orders are listed on our store pages at the time of checkout. Pricing and availability may change over time.</p>
 
       <h2>3. Refund Policy</h2>
       <p>
