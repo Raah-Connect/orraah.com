@@ -112,6 +112,7 @@ export default function SiteFooter() {
         <div className="footer-links">
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
+          <Link href="/refund-policy">Refund Policy</Link>
           <Link href="/support">Support</Link>
         </div>
 

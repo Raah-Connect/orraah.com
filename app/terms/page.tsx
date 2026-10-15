@@ -1,4 +1,5 @@
 import LegalPage from '../components/LegalPage';
+import Link from 'next/link';
 
 export default function TermsOfService() {
   return (
@@ -14,7 +15,10 @@ export default function TermsOfService() {
       <p>Founders who pay $49 receive lifetime access to Orraah, including all future updates. The launch price will be $149.</p>
 
       <h2>3. Refund Policy</h2>
-      <p>Refund requests can be made within 30 days of purchase. Contact support@orraah.com with your order ID.</p>
+      <p>
+        Refund requests can be made within 30 days of purchase. Contact support@orraah.com with your order ID. For full terms,
+        see our <Link href="/refund-policy">Refund Policy</Link>.
+      </p>
 
       <h2>4. Acceptable Use</h2>
       <p>You agree not to use Orraah for any unlawful purpose or in any way that could harm others.</p>
