@@ -3,13 +3,11 @@
 import { initializePaddle, type Paddle } from "@paddle/paddle-js";
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { PRODUCT_CATALOG, type ProductConfig, type ProductId } from "@/lib/products";
 
-type PaddleEnv = "sandbox" | "production";
-
-const PADDLE_ENVIRONMENT = process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT;
 const PADDLE_CLIENT_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
+const PADDLE_PW_CUSTOMER = process.env.NEXT_PUBLIC_PADDLE_PW_CUSTOMER;
 const RESERVATION_PRODUCT_IDS = new Set<ProductId>([
   "founders-combo",
   "remote-access-custom-subdomain",
@@ -18,30 +16,17 @@ const RESERVATION_PRODUCT_IDS = new Set<ProductId>([
 
 const UNAVAILABLE_PRODUCT_IDS = new Set<ProductId>(["friends-family-hosting", "ai-package"]);
 
-function getPaddleEnvironment(): PaddleEnv {
-  const env = PADDLE_ENVIRONMENT;
-  if (!env) {
-    throw new Error("Missing required environment variable: NEXT_PUBLIC_PADDLE_ENVIRONMENT");
-  }
-  if (env !== "sandbox" && env !== "production") {
-    throw new Error("NEXT_PUBLIC_PADDLE_ENVIRONMENT must be exactly 'sandbox' or 'production'");
-  }
-  return env;
-}
-
 function getPaddleClientToken(): string {
   const token = PADDLE_CLIENT_TOKEN;
   if (!token) {
     throw new Error("Missing required environment variable: NEXT_PUBLIC_PADDLE_CLIENT_TOKEN");
-  }
-  if (getPaddleEnvironment() === "sandbox" && !token.startsWith("test_")) {
-    throw new Error("Sandbox requires NEXT_PUBLIC_PADDLE_CLIENT_TOKEN starting with 'test_'");
   }
   return token;
 }
 
 export default function ProductCheckoutPage() {
   const params = useParams<{ product: string }>();
+  const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,6 +36,35 @@ export default function ProductCheckoutPage() {
     const entry = PRODUCT_CATALOG[productId as ProductId];
     return entry ?? null;
   }, [params?.product]);
+
+  const pwCustomer = useMemo(() => {
+    const fromQueryId =
+      searchParams.get("pwCustomerId")?.trim() ||
+      searchParams.get("paddleCustomerId")?.trim() ||
+      searchParams.get("customerId")?.trim() ||
+      "";
+
+    if (fromQueryId) {
+      return { id: fromQueryId };
+    }
+
+    const fromQueryEmail =
+      searchParams.get("pwCustomerEmail")?.trim() ||
+      searchParams.get("customerEmail")?.trim() ||
+      searchParams.get("email")?.trim() ||
+      "";
+
+    if (fromQueryEmail && fromQueryEmail.includes("@")) {
+      return { email: fromQueryEmail };
+    }
+
+    const fromEnv = PADDLE_PW_CUSTOMER?.trim() ?? "";
+    if (fromEnv) {
+      return fromEnv.includes("@") ? { email: fromEnv } : { id: fromEnv };
+    }
+
+    return undefined;
+  }, [searchParams]);
 
   async function handleCheckout() {
     if (!product) return;
@@ -75,9 +89,10 @@ export default function ProductCheckoutPage() {
       }
 
       const paddle: Paddle | undefined = await initializePaddle({
-        environment: getPaddleEnvironment(),
+        environment: "production",
         token: getPaddleClientToken(),
-        debug: getPaddleEnvironment() === "sandbox",
+        pwCustomer,
+        debug: false,
         eventCallback: (event) => {
           if (event.name === "checkout.error" && event.detail) {
             setError(`Paddle checkout error: ${event.detail}`);
@@ -100,7 +115,7 @@ export default function ProductCheckoutPage() {
             ? previewError.message
             : "Unable to preview this Paddle price.";
         setError(
-          `Paddle could not preview this product price. Verify this pri_ ID belongs to the same sandbox account as your token. Details: ${message}`
+          `Paddle could not preview this product price. Verify this pri_ ID belongs to the same live account as your token. Details: ${message}`
         );
         return;
       }

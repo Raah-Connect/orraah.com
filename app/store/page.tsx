@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
+import SiteFooter from "../components/SiteFooter";
 import TopNavigator from "../components/TopNavigator";
 
 const DEFAULT_FOUNDER_LIMIT = 500;
@@ -379,14 +380,6 @@ export default function StorePage() {
           background: rgba(26,111,232,0.06);
         }
 
-        footer {
-          border-top: 1px solid var(--border);
-          padding: 40px 0;
-          text-align: center;
-          font-family: 'DM Mono', monospace;
-          font-size: 0.72rem;
-          color: var(--text-dim);
-        }
       `}</style>
 
       <main className="store-main">
@@ -492,9 +485,7 @@ export default function StorePage() {
           </div>
         </section>
 
-        <footer>
-          © 2026 Raah Connect LLC — All rights reserved.
-        </footer>
+        <SiteFooter />
       </main>
     </>
   );

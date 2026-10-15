@@ -1,4 +1,5 @@
 import LegalPage from '../components/LegalPage';
+import SiteFooter from '../components/SiteFooter';
 
 export default function SupportPage() {
   return (
@@ -20,6 +21,8 @@ export default function SupportPage() {
         <li><a href="https://github.com/Raah-Connect">GitHub</a></li>
         <li><a href="https://t.me/orraah">Telegram</a></li>
       </ul>
+
+      <SiteFooter />
     </LegalPage>
   );
 }

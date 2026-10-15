@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SiteFooter from "../components/SiteFooter";
 import TopNavigator from "../components/TopNavigator";
 
 export default function DownloadPage() {
@@ -203,6 +204,8 @@ export default function DownloadPage() {
         <p className="dl-note">
           Having trouble? Visit <Link href="/support">support</Link> or reach us on <a href="https://discord.com/invite/GDarZR92K" target="_blank" rel="noopener noreferrer">Discord</a>.
         </p>
+
+        <SiteFooter />
       </main>
     </>
   );

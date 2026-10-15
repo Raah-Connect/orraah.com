@@ -14,12 +14,8 @@ This document configures Paddle end-to-end for the current store and webhook imp
 1. Create products and one-time prices in Paddle for each paid SKU.
 2. Copy each Paddle price ID (must start with pri_).
 3. Update the corresponding paddlePriceId entries in [lib/products.ts](lib/products.ts).
-4. Create a client-side token:
-   - Sandbox for testing
-   - Live for production
-5. Create an API key:
-   - Sandbox key for test mode
-   - Live key for production mode
+4. Create a live client-side token for production checkout.
+5. Create a live API key for production mode.
 6. Configure notifications endpoint:
    - URL: https://your-domain.com/api/webhook
    - Events: transaction.completed and transaction.paid
@@ -32,14 +28,15 @@ Set these in your deployment host and in local .env.local for local testing.
 Public client vars:
 
 ```dotenv
-NEXT_PUBLIC_PADDLE_ENVIRONMENT=sandbox
-NEXT_PUBLIC_PADDLE_CLIENT_TOKEN=test_your_paddle_client_side_token_here
+NEXT_PUBLIC_PADDLE_ENVIRONMENT=production
+NEXT_PUBLIC_PADDLE_CLIENT_TOKEN=live_your_paddle_client_side_token_here
+NEXT_PUBLIC_PADDLE_PW_CUSTOMER=
 ```
 
 Server vars:
 
 ```dotenv
-PADDLE_API_KEY=pdl_sdbx_api_key_here
+PADDLE_API_KEY=pdl_live_api_key_here
 PADDLE_WEBHOOK_SECRET=pdl_ntfset_signing_secret_here
 RESEND_API_KEY=re_your_resend_api_key
 ```
@@ -53,8 +50,8 @@ ORDER_DB_READ_URL=https://your-domain-or-ip/api/founder-orders/slots
 ```
 
 Notes:
-- In sandbox, NEXT_PUBLIC_PADDLE_CLIENT_TOKEN must start with test_.
-- Keep environment mode and keys aligned. Do not mix sandbox token with production key.
+- Set NEXT_PUBLIC_PADDLE_PW_CUSTOMER to the signed-in user's Paddle customer ID (ctm_...) or email to enable Retain.
+- Keep environment mode and keys aligned. Do not mix test and live credentials.
 - Do not commit real keys.
 
 ## 3) Local webhook testing
@@ -74,7 +71,7 @@ npm run dev
 https://your-tunnel-domain/api/webhook
 ```
 
-4. Trigger a sandbox purchase from:
+4. Trigger a test purchase from:
 
 ```text
 /store/checkout/founders-combo
@@ -82,9 +79,9 @@ https://your-tunnel-domain/api/webhook
 
 ## 4) Production checklist
 
-1. Set NEXT_PUBLIC_PADDLE_ENVIRONMENT=production.
-2. Replace test client token with live client token.
-3. Replace sandbox API key and webhook secret with live values.
+1. Confirm NEXT_PUBLIC_PADDLE_ENVIRONMENT=production.
+2. Set live client token and live API key.
+3. Set live webhook signing secret.
 4. Confirm all live pri_ IDs in [lib/products.ts](lib/products.ts).
 5. Confirm Paddle notification destination points to your production domain.
 
@@ -99,13 +96,13 @@ https://your-tunnel-domain/api/webhook
 ## 6) Common issues
 
 - Error: Missing required environment variable NEXT_PUBLIC_PADDLE_ENVIRONMENT
-  - Set NEXT_PUBLIC_PADDLE_ENVIRONMENT to sandbox or production.
+  - Set NEXT_PUBLIC_PADDLE_ENVIRONMENT to production.
 
-- Error: Sandbox requires NEXT_PUBLIC_PADDLE_CLIENT_TOKEN starting with test_
-  - Use a sandbox client token while in sandbox mode.
+- Error: Checkout fails to initialize in production
+  - Verify NEXT_PUBLIC_PADDLE_CLIENT_TOKEN is a live token from the same Paddle account as your live pri_ IDs.
 
 - Checkout price preview fails
-  - Verify pri_ ID exists in the same Paddle account/environment as your token.
+  - Verify pri_ ID exists in the same live Paddle account as your token.
 
 - Webhook signature invalid
   - Confirm PADDLE_WEBHOOK_SECRET exactly matches the notification destination secret.
