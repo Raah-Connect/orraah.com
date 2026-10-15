@@ -19,9 +19,9 @@ export const PRODUCT_CATALOG: Record<ProductId, ProductConfig> = {
   
   "founders-combo": {
     id: "founders-combo",
-    name: "Founder's Combo (Hosting/Remote Access/Commerce/AI)",
+    name: "Founder's Combo (Hosting/Remote Access/AI)",
     description:
-      "Includes Friends & Family Hosting, Remote Access + Custom Subdomain, Peer-to-Peer Commerce & App Store, and AI Package.",
+      "Includes Friends & Family Hosting, Remote Access + Custom Subdomain, and AI Package.",
     unitAmount: 17500,
     priceLabel: "$175 first 500 signups",
     paddlePriceId: "pri_01kytdyq8kr7w5njawj9xrxqyt",

@@ -11,9 +11,6 @@ const FOUNDER_PRODUCTS = {
   "founders-combo": {
     delivery: "Estimated delivery: Q1 2027",
   },
-  "p2p-commerce-app-store": {
-    delivery: "Estimated delivery: Q1 2027",
-  },
   "remote-access-custom-subdomain": {
     delivery: "Estimated delivery: Q4 2026",
   },
@@ -404,8 +401,8 @@ export default function StorePage() {
             <div className="product-price-note">{founderNote("founders-combo", "Founder reservation • first 500 slots")}</div>
             <div className="product-delivery">{founderDelivery("founders-combo")}</div>
             <p className="product-desc">
-              Reserve founder pricing for Friends &amp; Family Hosting, Remote Access, Peer-to-Peer Commerce, and AI package.
-              Remote Access and Commerce are delivered when those products launch.
+              Reserve founder pricing for Friends &amp; Family Hosting, Remote Access, and AI package.
+              Remote Access is delivered when that product launches.
             </p>
             <Link href="/store/checkout/founders-combo" className="product-btn">Reserve founder pricing</Link>
           </div>
@@ -425,18 +422,6 @@ export default function StorePage() {
               </p>
             </details>
             <Link href="/store/checkout/planet-identity" className="product-btn">Get a planet</Link>
-          </div>
-
-          <div className="product-card">
-            <div className="product-tag">Founder reservation</div>
-            <div className="product-title">Peer-to-Peer Commerce &amp; App Store</div>
-            <div className="product-price">$50 <span>pre-order</span></div>
-            <div className="product-price-note">{founderNote("p2p-commerce-app-store", "Founder reservation • first 500 slots")}</div>
-            <div className="product-delivery">{founderDelivery("p2p-commerce-app-store")}</div>
-            <p className="product-desc">
-              Founder reservation pricing. Access is granted as soon as peer-to-peer commerce goes live.
-            </p>
-            <Link href="/store/checkout/p2p-commerce-app-store" className="product-btn">Reserve founder pricing</Link>
           </div>
 
           <div className="product-card">

@@ -38,8 +38,7 @@ export default function RefundsPage() {
 
       <h2>2. Pre-orders and Founder Reservations</h2>
       <p>
-        This covers the Founder Combo Kit, Peer-to-Peer Commerce &amp; App Store, and Remote Access + Custom
-        Subdomain.
+        This covers the Founder Combo Kit and Remote Access + Custom Subdomain.
       </p>
       <ul>
         <li>Pre-orders are fully refundable at any time before delivery.</li>

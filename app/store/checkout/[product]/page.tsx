@@ -11,7 +11,6 @@ const PADDLE_PW_CUSTOMER = process.env.NEXT_PUBLIC_PADDLE_PW_CUSTOMER;
 const RESERVATION_PRODUCT_IDS = new Set<ProductId>([
   "founders-combo",
   "remote-access-custom-subdomain",
-  "p2p-commerce-app-store",
 ]);
 
 const UNAVAILABLE_PRODUCT_IDS = new Set<ProductId>(["friends-family-hosting", "ai-package"]);

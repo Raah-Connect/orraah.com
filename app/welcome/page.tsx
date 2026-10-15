@@ -8,7 +8,7 @@ import { PRODUCT_CATALOG, type ProductId } from "@/lib/products";
 const PRODUCT_WELCOME_COPY: Partial<Record<ProductId, { title: string; body: string }>> = {
   "founders-combo": {
     title: "Founder access reserved",
-    body: "Your Founder Combo spot is secured. We will send rollout updates for hosting, remote access, commerce, and AI as each part goes live.",
+    body: "Your Founder Combo spot is secured. We will send rollout updates for hosting, remote access, and AI as each part goes live.",
   },
   "planet-identity": {
     title: "Planet identity secured",
