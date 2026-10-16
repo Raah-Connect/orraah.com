@@ -10,7 +10,7 @@ export default function SupportPage() {
       <p>We&apos;re here to help! Reach out any time and we&apos;ll get back to you as soon as possible.</p>
       <p className="legal-date">Refund Requests: Responded to within 3 business days</p>
 
-      <h2>Contact Us</h2>
+      <h2>How to Reach Us</h2>
        <p>Raah Connect LLC</p>
       <p>Email: support@raahconnect.com</p>
       <p>Include your order ID if applicable.</p>
