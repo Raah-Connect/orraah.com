@@ -1,5 +1,6 @@
 import LegalPage from '../components/LegalPage';
 import Link from 'next/link';
+import SiteFooter from '../components/SiteFooter';
 
 export default function PrivacyPolicy() {
   return (
@@ -128,6 +129,8 @@ export default function PrivacyPolicy() {
       <h2>14. Contact</h2>
       <p>Raah Connect LLC</p>
       <p>Email: support@raahconnect.com</p>
+
+      <SiteFooter />
     </LegalPage>
   );
 }

@@ -1,5 +1,6 @@
 import LegalPage from '../components/LegalPage';
 import Link from 'next/link';
+import SiteFooter from '../components/SiteFooter';
 
 export default function TermsOfService() {
   return (
@@ -90,6 +91,8 @@ export default function TermsOfService() {
       <h2>11. Contact</h2>
       <p>Raah Connect LLC</p>
       <p>Email: support@raahconnect.com</p>
+
+      <SiteFooter />
     </LegalPage>
   );
 }

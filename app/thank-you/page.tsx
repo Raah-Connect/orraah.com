@@ -155,7 +155,7 @@ export default function Success() {
             GitHub
           </a>
           <a
-            href="https://t.me/orraah"
+            href="https://t.me/raah-connect"
             target="_blank"
             rel="noopener noreferrer"
             className="link-btn"

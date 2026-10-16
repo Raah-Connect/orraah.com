@@ -116,7 +116,7 @@ export async function POST(request) {
           <ul>
             <li><a href="https://discord.gg/GDarZR92K">Discord</a></li>
             <li><a href="https://github.com/Raah-Connect">GitHub</a></li>
-            <li><a href="https://t.me/orraah">Telegram</a></li>
+            <li><a href="https://t.me/raah-connect">Telegram</a></li>
           </ul>
           <p style="margin: 24px 0;">
             <a href="${unsubscribeHref}" style="display: inline-block; padding: 10px 14px; border-radius: 8px; border: 1px solid #dde3ed; color: #0a0f1e; text-decoration: none; font-size: 14px;">Unsubscribe</a>

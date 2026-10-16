@@ -23,7 +23,7 @@ export default function SupportPage() {
       <ul>
         <li><a href="https://discord.gg/GDarZR92K">Discord</a></li>
         <li><a href="https://github.com/Raah-Connect">GitHub</a></li>
-        <li><a href="https://t.me/orraah">Telegram</a></li>
+        <li><a href="https://t.me/raah-connect">Telegram</a></li>
       </ul>
 
       <SiteFooter />
