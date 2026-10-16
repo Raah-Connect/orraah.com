@@ -1,4 +1,5 @@
 import LegalPage from '../components/LegalPage';
+import Link from 'next/link';
 import SiteFooter from '../components/SiteFooter';
 
 export default function SupportPage() {
@@ -13,7 +14,10 @@ export default function SupportPage() {
       <p>Include your order ID if applicable.</p>
 
       <h2>Refunds &amp; Disputes</h2>
-      <p>For any issues with your purchase, contact support first. We&apos;ll respond promptly.</p>
+      <p>
+        For any issues with your purchase, contact support first. We&apos;ll respond promptly. You can also review our{' '}
+        <Link href="/refund-policy">Refund Policy</Link>.
+      </p>
 
       <h2>Community</h2>
       <ul>
