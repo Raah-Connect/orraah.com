@@ -400,6 +400,9 @@ export default function StorePage() {
             <div className="product-price">$175 <span>pre-order</span></div>
             <div className="product-price-note">{founderNote("founders-combo", "Founder reservation • first 500 slots")}</div>
             <div className="product-delivery">{founderDelivery("founders-combo")}</div>
+            <p className="product-price-note">
+              Fully refundable before delivery. See <Link href="/refund-policy">Refund Policy</Link>
+            </p>
             <p className="product-desc">
               Reserve founder pricing for Friends &amp; Family Hosting, Remote Access, and AI package.
               Remote Access is delivered when that product launches.
@@ -412,6 +415,9 @@ export default function StorePage() {
             <div className="product-title">Planet Identity</div>
             <div className="product-price">$10</div>
             <div className="product-price-note">One-time purchase</div>
+            <div className="product-price-note">
+              Refunds available within 14 days only if ownership has not changed. See <Link href="/refund-policy">Refund Policy</Link>.
+            </div>
             <p className="product-desc">
               Your own Urbit planet - a real identity on the network, owned by you.
             </p>
@@ -430,6 +436,9 @@ export default function StorePage() {
             <div className="product-price">$50 <span>pre-order</span></div>
             <div className="product-price-note">{founderNote("remote-access-custom-subdomain", "Founder reservation • first 500 slots")}</div>
             <div className="product-delivery">{founderDelivery("remote-access-custom-subdomain")}</div>
+            <p className="product-price-note">
+              Fully refundable before delivery. See <Link href="/refund-policy">Refund Policy</Link>
+            </p>
             <p className="product-desc">
               Founder reservation pricing. Get remote access as soon as this feature launches.
             </p>
