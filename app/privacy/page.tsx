@@ -73,7 +73,7 @@ export default function PrivacyPolicy() {
       <ul>
         <li>Paddle, for payments, taxes and refunds.</li>
         <li>Vercel, for website hosting.</li>
-        <li>[Email / waitlist provider], for sending emails.</li>
+        <li>[Resend / waitlist provider], for sending emails.</li>
       </ul>
       <p>We may also disclose information when required by law or to protect our rights and users.</p>
 

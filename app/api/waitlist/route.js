@@ -1,4 +1,5 @@
 // app/api/waitlist/route.js
+import crypto from 'node:crypto';
 import { Resend } from 'resend';
 
 const COOLDOWN_MS = 30 * 1000;
@@ -21,6 +22,20 @@ function isCoolingDown(ip) {
   const previous = ipSubmissionTracker.get(ip);
   if (!previous) return false;
   return Date.now() - previous < COOLDOWN_MS;
+}
+
+function normalizeEmail(email) {
+  return typeof email === 'string' ? email.trim().toLowerCase() : '';
+}
+
+function getUnsubscribeSecret() {
+  return process.env.WAITLIST_UNSUBSCRIBE_SECRET || process.env.RESEND_API_KEY || '';
+}
+
+function signEmail(email) {
+  const secret = getUnsubscribeSecret();
+  if (!secret) return '';
+  return crypto.createHmac('sha256', secret).update(email, 'utf8').digest('hex');
 }
 
 async function syncContactToAudience(email, resendApiKey) {
@@ -69,7 +84,7 @@ export async function POST(request) {
     }
 
     const { email } = await request.json();
-    const normalizedEmail = typeof email === 'string' ? email.trim() : '';
+    const normalizedEmail = normalizeEmail(email);
 
     if (!normalizedEmail || !normalizedEmail.includes('@')) {
       return Response.json(
@@ -80,20 +95,33 @@ export async function POST(request) {
 
     await syncContactToAudience(normalizedEmail, resendApiKey);
 
+    const unsubscribeToken = signEmail(normalizedEmail);
+    const unsubscribeUrl = new URL('/api/waitlist/unsubscribe', request.url);
+    unsubscribeUrl.searchParams.set('email', normalizedEmail);
+    unsubscribeUrl.searchParams.set('token', unsubscribeToken);
+    const unsubscribeHref = unsubscribeUrl.toString();
+
     await resend.emails.send({
       from: 'Orraah <support@raahconnect.com>',
       to: [normalizedEmail],
       subject: 'Thanks for joining the waitlist!',
+      headers: {
+        'List-Unsubscribe': `<${unsubscribeHref}>, <mailto:support@raahconnect.com?subject=${encodeURIComponent('Unsubscribe from Orraah waitlist emails')}>`,
+      },
       html: `
         <div style="font-family: sans-serif; max-width: 500px;">
           <h2>Thanks for joining the waitlist!</h2>
-          <p>We'll notify you when Orraah Remote Access, P2P Commerce and AI features are available.</p>
+          <p>We'll notify you when Orraah Remote Access, Friends/Family Hosting, and AI features are available.</p>
           <p>In the meantime, join our community:</p>
           <ul>
             <li><a href="https://discord.gg/GDarZR92K">Discord</a></li>
             <li><a href="https://github.com/Raah-Connect">GitHub</a></li>
             <li><a href="https://t.me/orraah">Telegram</a></li>
           </ul>
+          <p style="margin: 24px 0;">
+            <a href="${unsubscribeHref}" style="display: inline-block; padding: 10px 14px; border-radius: 8px; border: 1px solid #dde3ed; color: #0a0f1e; text-decoration: none; font-size: 14px;">Unsubscribe</a>
+          </p>
+          <p style="color: #666; font-size: 12px;">If the button does not work, email <a href="mailto:support@raahconnect.com">support@raahconnect.com</a> and include your waitlist email address.</p>
           <p style="color: #666; font-size: 14px;">— The Orraah Team</p>
         </div>
       `,
