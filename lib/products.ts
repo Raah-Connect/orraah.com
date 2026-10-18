@@ -24,7 +24,7 @@ export const PRODUCT_CATALOG: Record<ProductId, ProductConfig> = {
       "Includes Friends & Family Hosting, Remote Access + Custom Subdomain, and AI Package.",
     unitAmount: 17500,
     priceLabel: "$175 first 500 signups",
-    paddlePriceId: "pri_01kytdyq8kr7w5njawj9xrxqyt",
+    paddlePriceId: "pri_01m56vwf76s5adhn3ctegsq4bd",
   },
   "planet-identity": {
     id: "planet-identity",
@@ -32,7 +32,7 @@ export const PRODUCT_CATALOG: Record<ProductId, ProductConfig> = {
     description: "Your own Urbit planet - a real identity on the network, owned by you.",
     unitAmount: 1000,
     priceLabel: "$10 one-time",
-    paddlePriceId: "pri_01kytb6k45tez9g0xwcs0h3vaz",
+    paddlePriceId: "pri_01m56w4hyfv02fmk8pbr2fzxpg",
   },
   "friends-family-hosting": {
     id: "friends-family-hosting",
@@ -48,7 +48,7 @@ export const PRODUCT_CATALOG: Record<ProductId, ProductConfig> = {
     description: "Access your server remotely with your own subdomain (yourname.orraah.com).",
     unitAmount: 5000,
     priceLabel: "$50 one-time (first 500 signups)",
-    paddlePriceId: "pri_01kytaaxxb5g2e7spwp4tg8vk6",
+    paddlePriceId: "pri_01m56vt2b1z98z3s28yk3g4gcd",
   },
   "p2p-commerce-app-store": {
     id: "p2p-commerce-app-store",
