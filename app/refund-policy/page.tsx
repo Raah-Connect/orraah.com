@@ -233,6 +233,13 @@ export default function RefundsPage() {
         set out in Paddle Buyer Terms and Conditions.
       </p>
 
+      <p>
+        Official Paddle Refund Policy:{' '}
+        <a href="https://www.paddle.com/legal/refund-policy" target="_blank" rel="noopener noreferrer">
+          paddle.com/legal/refund-policy
+        </a>
+      </p>
+
       <p>March 31, 2026</p>
 
       <SiteFooter />
