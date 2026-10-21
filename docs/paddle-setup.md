@@ -44,15 +44,16 @@ RESEND_API_KEY=re_your_resend_api_key
 Optional droplet persistence:
 
 ```dotenv
-ORDER_DB_URL=https://your-domain-or-ip/api/founder-orders
+ORDER_DB_URL=https://your-domain.com/api/founder-orders
 ORDER_DB_TOKEN=replace_with_long_random_secret
-ORDER_DB_READ_URL=https://your-domain-or-ip/api/founder-orders/slots
+ORDER_DB_READ_URL=https://your-domain.com/api/founder-orders/slots
 ```
 
 Notes:
 - Set NEXT_PUBLIC_PADDLE_PW_CUSTOMER to the signed-in user's Paddle customer ID (ctm_...) or email to enable Retain.
 - Keep environment mode and keys aligned. Do not mix test and live credentials.
 - Do not commit real keys.
+- If you target a raw server IP instead of a domain, prefer `http://<ip>/...` unless TLS is explicitly configured for that IP (SNI/certificate mismatch can cause `ERR_SSL_TLSV1_ALERT_INTERNAL_ERROR`).
 
 ## 3) Local webhook testing
 

@@ -7,37 +7,50 @@ const FOUNDER_PRODUCTS = [
     deliveryWindow: "Estimated delivery: Q1 2027",
   },
   {
-    id: "p2p-commerce-app-store",
-    label: "Peer-to-Peer Commerce & App Store",
-    deliveryWindow: "Estimated delivery: Q1 2027",
-  },
-  {
     id: "remote-access-custom-subdomain",
     label: "Remote Access + Custom Subdomain",
     deliveryWindow: "Estimated delivery: Q4 2026",
   },
 ];
 
+function isIpv4Host(hostname) {
+  return /^(\d{1,3}\.){3}\d{1,3}$/.test(hostname);
+}
+
+function normalizeDropletReadUrl(rawUrl) {
+  try {
+    const parsed = new URL(rawUrl);
+    // Raw IPs over HTTPS often fail TLS validation/SNI on minimal droplet setups.
+    if (parsed.protocol === "https:" && isIpv4Host(parsed.hostname)) {
+      parsed.protocol = "http:";
+    }
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
 function getDropletReadUrl() {
   if (process.env.ORDER_DB_READ_URL) {
-    return process.env.ORDER_DB_READ_URL;
+    const explicit = normalizeDropletReadUrl(process.env.ORDER_DB_READ_URL);
+    return explicit ? explicit.toString() : null;
   }
 
   if (!process.env.ORDER_DB_URL) {
     return null;
   }
 
-  try {
-    const parsed = new URL(process.env.ORDER_DB_URL);
-    if (parsed.pathname.endsWith("/founder-orders")) {
-      parsed.pathname = parsed.pathname.replace(/\/founder-orders$/, "/founder-orders/slots");
-    } else {
-      parsed.pathname = `${parsed.pathname.replace(/\/$/, "")}/slots`;
-    }
-    return parsed.toString();
-  } catch {
+  const parsed = normalizeDropletReadUrl(process.env.ORDER_DB_URL);
+  if (!parsed) {
     return null;
   }
+
+  if (parsed.pathname.endsWith("/founder-orders")) {
+    parsed.pathname = parsed.pathname.replace(/\/founder-orders$/, "/founder-orders/slots");
+  } else {
+    parsed.pathname = `${parsed.pathname.replace(/\/$/, "")}/slots`;
+  }
+  return parsed.toString();
 }
 
 async function fetchFounderCountsFromDroplet() {

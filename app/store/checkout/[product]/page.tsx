@@ -7,13 +7,14 @@ import { useParams, useSearchParams } from "next/navigation";
 import { PRODUCT_CATALOG, type ProductConfig, type ProductId } from "@/lib/products";
 
 const PADDLE_CLIENT_TOKEN = process.env.NEXT_PUBLIC_PADDLE_CLIENT_TOKEN;
+const PADDLE_ENVIRONMENT = process.env.NEXT_PUBLIC_PADDLE_ENVIRONMENT;
 const PADDLE_PW_CUSTOMER = process.env.NEXT_PUBLIC_PADDLE_PW_CUSTOMER;
 const RESERVATION_PRODUCT_IDS = new Set<ProductId>([
   "founders-combo",
   "remote-access-custom-subdomain",
 ]);
 
-const UNAVAILABLE_PRODUCT_IDS = new Set<ProductId>(["friends-family-hosting", "ai-package"]);
+const UNAVAILABLE_PRODUCT_IDS = new Set<ProductId>();
 
 function getPaddleClientToken(): string {
   const token = PADDLE_CLIENT_TOKEN;
@@ -21,6 +22,29 @@ function getPaddleClientToken(): string {
     throw new Error("Missing required environment variable: NEXT_PUBLIC_PADDLE_CLIENT_TOKEN");
   }
   return token;
+}
+
+function getPaddleEnvironment(): "production" | "sandbox" {
+  const value = (PADDLE_ENVIRONMENT ?? "production").trim().toLowerCase();
+  return value === "sandbox" ? "sandbox" : "production";
+}
+
+function maskToken(token: string): string {
+  if (token.length <= 12) return `${token.slice(0, 4)}...`;
+  return `${token.slice(0, 8)}...${token.slice(-4)}`;
+}
+
+function describePaddleErrorDetail(detail: unknown): string {
+  if (typeof detail === "string") return detail;
+  if (detail && typeof detail === "object") {
+    try {
+      return JSON.stringify(detail);
+    } catch {
+      return "[unserializable error detail]";
+    }
+  }
+  if (detail === null || detail === undefined) return "No detail provided";
+  return String(detail);
 }
 
 export default function ProductCheckoutPage() {
@@ -87,14 +111,34 @@ export default function ProductCheckoutPage() {
         return;
       }
 
+      const environment = getPaddleEnvironment();
+      const token = getPaddleClientToken();
+      const host = typeof window !== "undefined" ? window.location.host : "unknown-host";
+      const debugMeta = `env=${environment}, token=${maskToken(token)}, host=${host}, priceId=${product.paddlePriceId}`;
+
+      if (environment === "production" && token.startsWith("test_")) {
+        setError(
+          "Token/environment mismatch: production checkout is using a sandbox token (test_). Update NEXT_PUBLIC_PADDLE_CLIENT_TOKEN to a live token and redeploy/restart."
+        );
+        return;
+      }
+
+      if (environment === "sandbox" && token.startsWith("live_")) {
+        setError(
+          "Token/environment mismatch: sandbox checkout is using a live token (live_). Set NEXT_PUBLIC_PADDLE_ENVIRONMENT=production or use a sandbox token."
+        );
+        return;
+      }
+
       const paddle: Paddle | undefined = await initializePaddle({
-        environment: "production",
-        token: getPaddleClientToken(),
+        environment,
+        token,
         pwCustomer,
         debug: false,
         eventCallback: (event) => {
-          if (event.name === "checkout.error" && event.detail) {
-            setError(`Paddle checkout error: ${event.detail}`);
+          if (event.name === "checkout.error") {
+            const detail = describePaddleErrorDetail(event.detail);
+            setError(`Paddle checkout error: ${detail}. Debug: ${debugMeta}`);
           }
         },
       });
@@ -114,7 +158,7 @@ export default function ProductCheckoutPage() {
             ? previewError.message
             : "Unable to preview this Paddle price.";
         setError(
-          `Paddle could not preview this product price. Verify this pri_ ID belongs to the same live account as your token. Details: ${message}`
+          `Paddle could not preview this product price. Verify this pri_ ID belongs to the same account as your client token and that the current domain is allowed for this token. Details: ${message}. Debug: ${debugMeta}`
         );
         return;
       }

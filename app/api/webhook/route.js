@@ -12,12 +12,6 @@ const FOUNDER_PRODUCTS = [
     priceId: PRODUCT_CATALOG["founders-combo"].paddlePriceId,
   },
   {
-    id: "p2p-commerce-app-store",
-    name: "Peer-to-Peer Commerce & App Store",
-    deliveryWindow: "Estimated delivery: Q1 2027",
-    priceId: PRODUCT_CATALOG["p2p-commerce-app-store"].paddlePriceId,
-  },
-  {
     id: "remote-access-custom-subdomain",
     name: "Remote Access + Custom Subdomain",
     deliveryWindow: "Estimated delivery: Q4 2026",

@@ -14,21 +14,9 @@ const PRODUCT_WELCOME_COPY: Partial<Record<ProductId, { title: string; body: str
     title: "Planet identity secured",
     body: "Your order is complete. We will follow up with identity provisioning details so you can claim your Urbit planet.",
   },
-  "friends-family-hosting": {
-    title: "Hosting spot secured",
-    body: "Your Friends and Family Hosting spot is secured. We will send rollout updates as hosting goes live."
-  },
   "remote-access-custom-subdomain": {
     title: "Remote access reserved",
     body: "Your Remote Access and Custom Subdomain spot is secured.  We will send rollout updates as remote access goes live.",
-  },
-  "p2p-commerce-app-store": {
-    title: "Commerce access reserved",
-    body: "Your Peer-to-Peer Commerce and App Store spot is secured.  We will send rollout updates as the peer-to-peer commerce and app store goes live.",
-  },
-  "ai-package": {
-    title: "AI package confirmed",
-    body: "Your AI Package checkout is spot is secured.  We will send rollout updates as the AI package goes live.",
   },
 };
 

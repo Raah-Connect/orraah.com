@@ -1,10 +1,7 @@
 export type ProductId =
   | "founders-combo"
   | "planet-identity"
-  | "friends-family-hosting"
-  | "remote-access-custom-subdomain"
-  | "p2p-commerce-app-store"
-  | "ai-package";
+  | "remote-access-custom-subdomain";
 
 export type ProductConfig = {
   id: ProductId;
@@ -34,14 +31,7 @@ export const PRODUCT_CATALOG: Record<ProductId, ProductConfig> = {
     priceLabel: "$10 one-time",
     paddlePriceId: "pri_01m56w4hyfv02fmk8pbr2fzxpg",
   },
-  "friends-family-hosting": {
-    id: "friends-family-hosting",
-    name: "Friends & Family Hosting",
-    description: "Host servers for your friends and family under your own infrastructure.",
-    unitAmount: 5000,
-    priceLabel: "$50 first 500 signups",
-    paddlePriceId: "pri_01kyta8jh8nra5nk401na09wvm",
-  },
+
   "remote-access-custom-subdomain": {
     id: "remote-access-custom-subdomain",
     name: "Remote Access + Custom Subdomain",
@@ -49,21 +39,5 @@ export const PRODUCT_CATALOG: Record<ProductId, ProductConfig> = {
     unitAmount: 5000,
     priceLabel: "$50 one-time (first 500 signups)",
     paddlePriceId: "pri_01m56vt2b1z98z3s28yk3g4gcd",
-  },
-  "p2p-commerce-app-store": {
-    id: "p2p-commerce-app-store",
-    name: "Peer-to-Peer Commerce & App Store",
-    description: "Buy, sell, and discover apps directly with other Orraah users.",
-    unitAmount: 5000,
-    priceLabel: "$50 first 500 signups",
-    paddlePriceId: "pri_01kz7f4dkmkrh5209mk4dwexpk",
-  },
-  "ai-package": {
-    id: "ai-package",
-    name: "AI Package",
-    description: "Run your own AI assistant and sandbox on your virtual server.",
-    unitAmount: 5000,
-    priceLabel: "$50 first 500 signups",
-    paddlePriceId: "pri_01kyte027mpmdzc52aj7wbh9zb",
   },
 };
