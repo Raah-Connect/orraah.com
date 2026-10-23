@@ -47,6 +47,28 @@ function describePaddleErrorDetail(detail: unknown): string {
   return String(detail);
 }
 
+function resolveCheckoutErrorMessage(detail: unknown, debugMeta: string): string {
+  const text = describePaddleErrorDetail(detail);
+  const normalized = text.toLowerCase();
+
+  if (normalized.includes("transaction_checkout_not_enabled")) {
+    return `Paddle checkout is disabled for this account. Finish Paddle onboarding in the vendor dashboard, then retry checkout. Debug: ${debugMeta}`;
+  }
+
+  if (
+    normalized.includes("transaction_checkout_url_domain_is_not_approved") ||
+    normalized.includes("checkout_url_domain_not_approved")
+  ) {
+    return `This domain is not approved for Paddle checkout. Add/approve this host in Paddle checkout domains and retry. Debug: ${debugMeta}`;
+  }
+
+  if (normalized.includes("transaction_price_not_found")) {
+    return `Paddle could not find this price in the current account/environment. Confirm the pri_ ID is live and belongs to the same account as your client token. Debug: ${debugMeta}`;
+  }
+
+  return `Paddle checkout error: ${text}. Debug: ${debugMeta}`;
+}
+
 export default function ProductCheckoutPage() {
   const params = useParams<{ product: string }>();
   const searchParams = useSearchParams();
@@ -87,6 +109,17 @@ export default function ProductCheckoutPage() {
     }
 
     return undefined;
+  }, [searchParams]);
+
+  const discountCode = useMemo(() => {
+    const raw =
+      searchParams.get("discount")?.trim() ||
+      searchParams.get("discountCode")?.trim() ||
+      "";
+
+    if (!raw) return null;
+    // Paddle discount/coupon codes are case-insensitive, normalize for consistency.
+    return raw.toUpperCase();
   }, [searchParams]);
 
   async function handleCheckout() {
@@ -137,8 +170,7 @@ export default function ProductCheckoutPage() {
         debug: false,
         eventCallback: (event) => {
           if (event.name === "checkout.error") {
-            const detail = describePaddleErrorDetail(event.detail);
-            setError(`Paddle checkout error: ${detail}. Debug: ${debugMeta}`);
+            setError(resolveCheckoutErrorMessage(event.detail, debugMeta));
           }
         },
       });
@@ -165,10 +197,12 @@ export default function ProductCheckoutPage() {
 
       paddle.Checkout.open({
         items: [{ priceId: product.paddlePriceId, quantity: 1 }],
+        ...(discountCode ? { discountCode } : {}),
         customData: {
           productId: product.id,
           fulfillmentMode: RESERVATION_PRODUCT_IDS.has(product.id) ? "reservation" : "immediate",
           checkoutSource: "store-checkout",
+          ...(discountCode ? { discountCode } : {}),
         },
         settings: {
           displayMode: "overlay",
@@ -211,6 +245,10 @@ export default function ProductCheckoutPage() {
             ? "This product is coming soon and is not available for checkout yet."
             : "A secure Paddle one-page overlay will open to complete payment."}
         </p>
+
+        {discountCode && (
+          <p style={styles.discountApplied}>Discount code ready: {discountCode}</p>
+        )}
 
         {error && <p style={styles.error}>{error}</p>}
 
@@ -280,6 +318,13 @@ const styles: Record<string, React.CSSProperties> = {
     marginBottom: "24px",
     color: "#4a5568",
     fontSize: "14px",
+  },
+  discountApplied: {
+    margin: 0,
+    marginBottom: "16px",
+    color: "#1452b3",
+    fontSize: "14px",
+    fontWeight: 700,
   },
   error: {
     margin: 0,
