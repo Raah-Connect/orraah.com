@@ -17,30 +17,45 @@ function isIpv4Host(hostname) {
   return /^(\d{1,3}\.){3}\d{1,3}$/.test(hostname);
 }
 
-function normalizeDropletReadUrl(rawUrl) {
+function parseDropletUrl(rawUrl) {
   try {
-    const parsed = new URL(rawUrl);
-    // Raw IPs over HTTPS often fail TLS validation/SNI on minimal droplet setups.
-    if (parsed.protocol === "https:" && isIpv4Host(parsed.hostname)) {
-      parsed.protocol = "http:";
-    }
-    return parsed;
+    return new URL(rawUrl);
   } catch {
     return null;
   }
 }
 
+function buildReadUrlCandidates(rawUrl) {
+  const parsed = parseDropletUrl(rawUrl);
+  if (!parsed) return [];
+
+  const primary = parsed.toString();
+  const candidates = [primary];
+
+  // For raw IPv4 over HTTPS, keep HTTPS first and try HTTP only as fallback.
+  if (parsed.protocol === "https:" && isIpv4Host(parsed.hostname)) {
+    const fallback = new URL(primary);
+    fallback.protocol = "http:";
+    const fallbackUrl = fallback.toString();
+    if (fallbackUrl !== primary) {
+      candidates.push(fallbackUrl);
+    }
+  }
+
+  return candidates;
+}
+
 function getDropletReadUrl() {
   if (process.env.ORDER_DB_READ_URL) {
-    const explicit = normalizeDropletReadUrl(process.env.ORDER_DB_READ_URL);
-    return explicit ? explicit.toString() : null;
+    const candidates = buildReadUrlCandidates(process.env.ORDER_DB_READ_URL);
+    return candidates.length > 0 ? candidates : null;
   }
 
   if (!process.env.ORDER_DB_URL) {
     return null;
   }
 
-  const parsed = normalizeDropletReadUrl(process.env.ORDER_DB_URL);
+  const parsed = parseDropletUrl(process.env.ORDER_DB_URL);
   if (!parsed) {
     return null;
   }
@@ -50,12 +65,14 @@ function getDropletReadUrl() {
   } else {
     parsed.pathname = `${parsed.pathname.replace(/\/$/, "")}/slots`;
   }
-  return parsed.toString();
+
+  const candidates = buildReadUrlCandidates(parsed.toString());
+  return candidates.length > 0 ? candidates : null;
 }
 
 async function fetchFounderCountsFromDroplet() {
-  const readUrl = getDropletReadUrl();
-  if (!readUrl) {
+  const readUrlCandidates = getDropletReadUrl();
+  if (!readUrlCandidates) {
     return { configured: false, products: [] };
   }
 
@@ -68,30 +85,42 @@ async function fetchFounderCountsFromDroplet() {
     headers.Authorization = `Bearer ${authToken}`;
   }
 
-  const response = await fetch(readUrl, {
-    method: "GET",
-    headers,
-    cache: "no-store",
-  });
+  const failures = [];
 
-  if (!response.ok) {
-    const errorPayload = await response.text();
-    throw new Error(`Droplet slot API error: ${response.status} ${errorPayload.slice(0, 300)}`);
+  for (const readUrl of readUrlCandidates) {
+    try {
+      const response = await fetch(readUrl, {
+        method: "GET",
+        headers,
+        cache: "no-store",
+      });
+
+      if (!response.ok) {
+        const errorPayload = await response.text();
+        failures.push(`(${readUrl}) ${response.status} ${errorPayload.slice(0, 120)}`);
+        continue;
+      }
+
+      const payload = await response.json();
+      const products = Array.isArray(payload?.products) ? payload.products : [];
+      return {
+        configured: true,
+        products,
+        asOf: payload?.asOf ?? new Date().toISOString(),
+      };
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown fetch error";
+      failures.push(`(${readUrl}) ${message}`);
+    }
   }
 
-  const payload = await response.json();
-  const products = Array.isArray(payload?.products) ? payload.products : [];
-  return {
-    configured: true,
-    products,
-    asOf: payload?.asOf ?? new Date().toISOString(),
-  };
+  throw new Error(`Droplet slot API fetch failed for all candidates: ${failures.join(" | ")}`);
 }
 
 export async function GET() {
-  const readUrl = getDropletReadUrl();
+  const readUrlCandidates = getDropletReadUrl();
 
-  if (!readUrl) {
+  if (!readUrlCandidates) {
     const fallback = FOUNDER_PRODUCTS.map((product) => ({
       id: product.id,
       label: product.label,
