@@ -131,6 +131,8 @@ export default function ProductCheckoutPage() {
     setLoading(true);
     setError(null);
 
+    const isPlanetIdentity = product.id === "planet-identity";
+
     try {
       if (!product.paddlePriceId) {
         setError("Missing Paddle price ID for this product.");
@@ -195,15 +197,29 @@ export default function ProductCheckoutPage() {
         return;
       }
 
+      const customerId = pwCustomer && "id" in pwCustomer ? pwCustomer.id : "";
+      const customerEmail = pwCustomer && "email" in pwCustomer ? pwCustomer.email : "";
+      const customData: Record<string, string> = {
+        productId: product.id,
+        fulfillmentMode: RESERVATION_PRODUCT_IDS.has(product.id) ? "reservation" : "immediate",
+        checkoutSource: "store-checkout",
+        ...(discountCode ? { discountCode } : {}),
+      };
+
+      if (isPlanetIdentity) {
+        delete customData.fulfillmentMode;
+        if (customerId) {
+          customData.customer_id = customerId;
+        }
+        if (customerEmail) {
+          customData.customer_email = customerEmail;
+        }
+      }
+
       paddle.Checkout.open({
         items: [{ priceId: product.paddlePriceId, quantity: 1 }],
         ...(discountCode ? { discountCode } : {}),
-        customData: {
-          productId: product.id,
-          fulfillmentMode: RESERVATION_PRODUCT_IDS.has(product.id) ? "reservation" : "immediate",
-          checkoutSource: "store-checkout",
-          ...(discountCode ? { discountCode } : {}),
-        },
+        customData,
         settings: {
           displayMode: "overlay",
           variant: "one-page",
