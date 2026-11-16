@@ -180,19 +180,19 @@ export default function DownloadPage() {
             <div className="dl-card-title">Linux</div>
             <div className="dl-actions">
               <a
-                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.8_amd64.AppImage"
+                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.9_amd64.AppImage"
                 className="dl-btn dl-btn-small"
               >
                 ↓ Download .appimage
               </a>
               <a
-                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.8_amd64.deb"
+                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah_0.1.9_amd64.deb"
                 className="dl-btn dl-btn-small"
               >
                 ↓ Download .deb
               </a>
               <a
-                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah-0.1.8-1.x86_64.rpm"
+                href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/linux-x86_64/Orraah-0.1.9-1.x86_64.rpm"
                 className="dl-btn dl-btn-small"
               >
                 ↓ Download .rpm
