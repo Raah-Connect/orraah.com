@@ -148,7 +148,7 @@ export default function DownloadPage() {
         <TopNavigator />
         <h1 className="dl-title">Download Orraah</h1>
         <p className="dl-sub">
-          Version 0.1.8 — Available for Windows, macOS, and Linux.
+          Version 0.1.9 — Available for Windows, macOS, and Linux.
         </p>
 
         <div className="dl-grid">
@@ -167,7 +167,7 @@ export default function DownloadPage() {
             <img src="/applelogo.jpeg" alt="macOS" className="dl-card-icon" />
             <div className="dl-card-title">macOS</div>
             <a
-              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/darwin-universal/Orraah_0.1.8_universal.dmg"
+              href="https://orraah.sfo3.cdn.digitaloceanspaces.com/updates/darwin-universal/Orraah_0.1.9_universal.dmg"
               
               className="dl-btn"
             >
