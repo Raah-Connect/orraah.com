@@ -53,14 +53,17 @@ function shouldForwardEvent(event) {
   return PAID_EVENT_TYPES.has(eventType) && PAID_TRANSACTION_STATUSES.has(transactionStatus);
 }
 
-async function forwardToOrderDb(rawBody) {
+async function forwardToOrderDb(rawBody, paddleSignature) {
   const orderDbUrl = process.env.ORDER_DB_URL;
   if (!orderDbUrl) {
     return { attempted: false };
   }
 
+  const forwardSecret = process.env.PADDLE_FORWARD_SHARED_SECRET ?? "";
   const headers = {
-    "Content-Type": "application/json",
+    "content-type": "application/json",
+    "paddle-signature": paddleSignature ?? "",
+    "x-perigee-forward-secret": forwardSecret,
   };
 
   if (process.env.ORDER_DB_TOKEN) {
@@ -107,7 +110,7 @@ export async function POST(request) {
       }
 
       if (shouldForwardEvent(event)) {
-        await forwardToOrderDb(rawBody);
+        await forwardToOrderDb(rawBody, signatureHeader ?? "");
         return Response.json({
           received: true,
           duplicate: false,

@@ -25,6 +25,8 @@ sqlite3 ~/orraah/orders.db "select count(*) from founder_orders;"
 Your Next.js webhook already posts founder order payloads to a configurable endpoint:
 - URL env: ORDER_DB_URL
 - Auth env: ORDER_DB_TOKEN (Bearer token)
+- Forward verification env: PADDLE_FORWARD_SHARED_SECRET (sent as x-perigee-forward-secret)
+- Paddle signature passthrough header: paddle-signature
 
 Your Next.js founder slot API now reads counts from the droplet API (instead of calling Paddle directly):
 - Read URL env: ORDER_DB_READ_URL (optional explicit)

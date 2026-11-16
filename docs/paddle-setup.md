@@ -46,6 +46,7 @@ Optional droplet persistence:
 ```dotenv
 ORDER_DB_URL=https://your-domain.com/api/founder-orders
 ORDER_DB_TOKEN=replace_with_long_random_secret
+PADDLE_FORWARD_SHARED_SECRET=replace_with_forward_shared_secret
 ORDER_DB_READ_URL=https://your-domain.com/api/founder-orders/slots
 ```
 
