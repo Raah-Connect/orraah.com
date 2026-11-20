@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import TopNavigator from "../components/TopNavigator";
 
 const API_URL = process.env.NEXT_PUBLIC_PLANETS_API_URL ?? "";
@@ -107,12 +108,14 @@ export default function PlanetsPage() {
           background: var(--gold);
           color: #ffffff;
           border: none;
+          display: inline-block;
           padding: 10px 16px;
           border-radius: 8px;
           font-family: 'Syne', sans-serif;
           font-weight: 700;
           font-size: 0.85rem;
           cursor: pointer;
+          text-decoration: none;
         }
 
         .planet-btn:disabled {
@@ -158,9 +161,9 @@ export default function PlanetsPage() {
                   height={96}
                 />
                 <span className="planet-patp">{patp}</span>
-                <button className="planet-btn" disabled>
+                <Link href="/store/checkout/planet-identity" className="planet-btn">
                   Buy
-                </button>
+                </Link>
               </div>
             ))}
           </section>
