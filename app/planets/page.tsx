@@ -159,7 +159,7 @@ export default function PlanetsPage() {
                 />
                 <span className="planet-patp">{patp}</span>
                 <button className="planet-btn" disabled>
-                  Buy — coming soon
+                  Buy
                 </button>
               </div>
             ))}
